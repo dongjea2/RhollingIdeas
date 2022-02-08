@@ -1,0 +1,26 @@
+#서버 설정
+server:
+  port: 9998
+  servlet:
+    context-path: /demo
+#스프링 설정
+spring:
+  datasource:
+    hikari:
+      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+      jdbc-url: jdbc:mysql://rholldb.cacqmhpknxfu.ap-northeast-2.rds.amazonaws.com:3306/rholl
+      username: admin
+      password: q1w2e3r4
+      maximum-pool-size: 10
+      minimum-idle: 2
+
+#맵리졸버 용 프리픽스
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+
+
+#스프링 부트 로그레벨 TRACE < DEBUG < INFO < WARN < ERROR
+logging:
+  level:
+    root: info
