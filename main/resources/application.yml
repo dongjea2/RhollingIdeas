@@ -8,7 +8,7 @@ spring:
   datasource:
     hikari:
       driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-      jdbc-url: jdbc:mysql://rholldb.cacqmhpknxfu.ap-northeast-2.rds.amazonaws.com:3306/rholl
+      jdbc-url: jdbc:log4jdbc:mysql://rholldb.cacqmhpknxfu.ap-northeast-2.rds.amazonaws.com:3306/rholl
       username: admin
       password: q1w2e3r4
       maximum-pool-size: 10
@@ -24,3 +24,4 @@ spring:
 logging:
   level:
     root: info
+    
