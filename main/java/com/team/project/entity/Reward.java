@@ -32,7 +32,6 @@ public class Reward {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int	rewardNo          ;
 	
-	@MapsId
 	@ManyToOne
 	@JoinColumn(name = "project_no")
 	private Project	projectNo     ;
@@ -46,7 +45,6 @@ public class Reward {
 	private String	deliverSelect ;
 	public Reward() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Reward(int rewardNo, Project projectNo, int rewardPrice, String rewardName, int deliverDate, int rewardNum,
