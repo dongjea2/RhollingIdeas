@@ -1,5 +1,7 @@
 package com.team.project.entity;
 
+import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -47,5 +49,23 @@ public class Reject {
 	public void setRejectReason(String rejectReason) {
 		this.rejectReason = rejectReason;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(project);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Reject other = (Reject) obj;
+		return Objects.equals(project, other.project);
+	}
+	
 	
 }

@@ -1,9 +1,10 @@
 package com.team.project.entity;
 
+import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -67,6 +68,24 @@ public class ProjectChange {
 	}
 	public void setProjectLikeCnt(int projectLikeCnt) {
 		this.projectLikeCnt = projectLikeCnt;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(projectLikeCnt, projectNo, projectStatus, sumPrice, supportCnt);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ProjectChange other = (ProjectChange) obj;
+		return projectLikeCnt == other.projectLikeCnt && Objects.equals(projectNo, other.projectNo)
+				&& Objects.equals(projectStatus, other.projectStatus) && sumPrice == other.sumPrice
+				&& supportCnt == other.supportCnt;
 	}
 
 	

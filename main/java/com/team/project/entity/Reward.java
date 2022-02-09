@@ -1,6 +1,7 @@
 package com.team.project.entity;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -112,6 +113,23 @@ public class Reward implements Serializable{
 	}
 	public void setDeliverSelect(String deliverSelect) {
 		this.deliverSelect = deliverSelect;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(projectNo, rewardNo);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Reward other = (Reward) obj;
+		return Objects.equals(projectNo, other.projectNo) && rewardNo == other.rewardNo;
 	}
 	
 
