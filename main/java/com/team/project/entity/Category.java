@@ -3,6 +3,8 @@ package com.team.project.entity;
 import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -16,6 +18,7 @@ import javax.persistence.Table;
 @Table
 public class Category {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int categoryNo;
 	private int categoryP;
 	private String categoryName;

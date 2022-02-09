@@ -1,12 +1,14 @@
 package com.team.project.entity;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 /*
@@ -24,12 +26,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table
-public class Reward implements Serializable{
+public class Reward {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int	rewardNo          ;
 	
-	@Id
+	@MapsId
 	@ManyToOne
 	@JoinColumn(name = "project_no")
 	private Project	projectNo     ;

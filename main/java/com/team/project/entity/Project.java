@@ -5,50 +5,58 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 
 @Entity
-@Table
+@Table(name = "project")
 public class Project {
 	@Id //시퀀스 설정해줘야함
-	private int	projectNo         ;   
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int		projectNo     ;   
 	private String	longTitle     ;   
 	private String	projectBrief  ;   
 	private String	editorPick    ;   
 	private String	projectImage  ;   
-	private int	targetPrice       ;   
+	private int		targetPrice   ;   
 	private Date	startDate     ;   
 	private Date	endDate       ;   
 	private String	shortTitle    ;   
 	private String	projectContent;   
 	private String	projectUrl    ;   
 
+	//좋아요 상태 (로그인 유저가 이프로젝트가 좋아요 일시 true)
+	@Transient
+	private boolean loginedUserProjectInterest=false; 
+
+
+
 	//JOINED TABLE
-	@OneToOne
+	@OneToOne(mappedBy = "project")	  
+	//저장 시 projectChange에 setProject해야함(관계의 주인 ProjectChange)
 	private ProjectChange projectChange;
 
 	@ManyToOne
-	@JoinColumn(name = "cate")
+	@JoinColumn(name = "category_no")
 	private Category category;
 
 	@ManyToOne
 	@JoinColumn(name = "user_no")
 	private Customer maker;
 	
-	//프로젝트의 선물삼자들
-	@OneToMany
+	@OneToMany(mappedBy = "project")
+	//저장 시 Reward에 setProject해야함
+	//프로젝트 삭제시 리워드도 자동삭제
 	private List<Reward> reward;
-
-	//좋아요 상태 (로그인 유저가 이프로젝트가 좋아요 일시 true)
-	private boolean loginedUserProjectInterest=false; 
-
 	                                  
 
 	public Project() {

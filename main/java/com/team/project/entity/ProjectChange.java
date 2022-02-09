@@ -5,45 +5,44 @@ import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-/*
-	`project_no`	NUMBER(8)	NOT NULL,
-	`support_cnt`	NUMBER(8)	NULL,
-	`project_status`	VARCHAR2(10)	NULL,
-	`sum_price`	NUMBER(8)	NULL,
-	`project_like_cnt`	NUMBER(8)	NULL
-*/
-
 @Entity
-@Table
+@Table(name = "project_change")
 public class ProjectChange {
+	
 	@Id
+	private int projectNo;
+	
+	@MapsId //ProjectChange.projectNo 와 매핑
 	@OneToOne
 	@JoinColumn(name = "project_no")
-	private Project	projectNo    ;
-	private int	supportCnt       ;
+	private Project	project;
+	private int		supportCnt;
 	private String	projectStatus;
-	private int	sumPrice         ;
-	private int	projectLikeCnt   ;
+	private int		sumPrice;
+	private int		projectLikeCnt;
+	
+	
 	public ProjectChange() {     
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public ProjectChange(Project projectNo, int supportCnt, String projectStatus, int sumPrice, int projectLikeCnt) {
 		super();
-		this.projectNo = projectNo;
+		this.project = project;
 		this.supportCnt = supportCnt;
 		this.projectStatus = projectStatus;
 		this.sumPrice = sumPrice;
 		this.projectLikeCnt = projectLikeCnt;
 	}
 	public Project getProjectNo() {
-		return projectNo;
+		return project;
 	}
 	public void setProjectNo(Project projectNo) {
-		this.projectNo = projectNo;
+		this.project = project;
 	}
 	public int getSupportCnt() {
 		return supportCnt;
