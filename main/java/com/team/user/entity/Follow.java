@@ -1,5 +1,6 @@
 package com.team.user.entity;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,7 +16,7 @@ import javax.persistence.Table;
 */
 @Entity
 @Table(name="follow")
-public class Follow { //hashcode, equals 생성 필요
+public class Follow implements Serializable{ //hashcode, equals 생성 필요
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "user_no")

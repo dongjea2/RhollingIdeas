@@ -1,6 +1,5 @@
 package com.team.payment.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
@@ -36,7 +35,7 @@ import com.team.user.entity.Customer;
 */
 @Entity
 @Table(name="payment")
-public class Payment implements Serializable{ //테이블 or 컬럼 이름 수정
+public class Payment{ //테이블 or 컬럼 이름 수정
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "payment_no")
