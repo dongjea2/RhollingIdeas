@@ -17,29 +17,30 @@ import javax.persistence.Table;
 @Entity
 @Table(name="follow")
 public class Follow implements Serializable{ //hashcode, equals 생성 필요
-	@Id
-	@ManyToOne
-	@JoinColumn(name = "user_no")
-	private List<Customer> userNo;
 	
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "user_no", columnDefinition = "following")
-	private List<Customer> follow;
+	@JoinColumn(name = "user_no")
+	private Customer userNo;
+	
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "user_no", columnDefinition = "follow")
+	private Customer follow;
 
-	public List<Customer> getUserNo() {
+	public Customer getUserNo() {
 		return userNo;
 	}
 
-	public void setUserNo(List<Customer> userNo) {
+	public void setUserNo(Customer userNo) {
 		this.userNo = userNo;
 	}
 
-	public List<Customer> getFollow() {
+	public Customer getFollow() {
 		return follow;
 	}
 
-	public void setFollow(List<Customer> follow) {
+	public void setFollow(Customer follow) {
 		this.follow = follow;
 	}
 

@@ -1,18 +1,23 @@
 package com.team.project.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "project_change")
 public class ProjectChange {
-
+	
 	@Id
+	private int projectNo;
+	
+	@MapsId
 	@OneToOne
 	@JoinColumn(name = "project_no")
 	private Project	project;
