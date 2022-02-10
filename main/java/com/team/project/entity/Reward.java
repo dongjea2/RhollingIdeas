@@ -34,7 +34,7 @@ public class Reward {
 	
 	@ManyToOne
 	@JoinColumn(name = "project_no")
-	private Project	projectNo     ;
+	private Project	project       ;
 
 	private int	rewardPrice       ;
 	private String	rewardName    ;
@@ -51,7 +51,7 @@ public class Reward {
 			int rewardSalesCnt, String itemName, String deliverSelect) {
 		super();
 		this.rewardNo = rewardNo;
-		this.projectNo = projectNo;
+		this.project = projectNo;
 		this.rewardPrice = rewardPrice;
 		this.rewardName = rewardName;
 		this.deliverDate = deliverDate;
@@ -67,11 +67,11 @@ public class Reward {
 	public void setRewardNo(int rewardNo) {
 		this.rewardNo = rewardNo;
 	}
-	public Project getProjectNo() {
-		return projectNo;
+	public Project getProject() {
+		return project;
 	}
-	public void setProjectNo(Project projectNo) {
-		this.projectNo = projectNo;
+	public void setProject(Project project) {
+		this.project = project;
 	}
 	public int getRewardPrice() {
 		return rewardPrice;
@@ -118,7 +118,7 @@ public class Reward {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(projectNo, rewardNo);
+		return Objects.hash(rewardNo);
 	}
 
 	@Override
@@ -130,9 +130,10 @@ public class Reward {
 		if (getClass() != obj.getClass())
 			return false;
 		Reward other = (Reward) obj;
-		return Objects.equals(projectNo, other.projectNo) && rewardNo == other.rewardNo;
+		return rewardNo == other.rewardNo;
 	}
-	
+
+
 
 	
 	
