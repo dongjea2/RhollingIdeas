@@ -5,7 +5,6 @@ import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -28,7 +27,7 @@ public class ProjectChange {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public ProjectChange(Project projectNo, int supportCnt, String projectStatus, int sumPrice, int projectLikeCnt) {
+	public ProjectChange(Project project, int supportCnt, String projectStatus, int sumPrice, int projectLikeCnt) {
 		super();
 		this.project = project;
 		this.supportCnt = supportCnt;
@@ -39,7 +38,7 @@ public class ProjectChange {
 	public Project getProjectNo() {
 		return project;
 	}
-	public void setProjectNo(Project projectNo) {
+	public void setProjectNo(Project project) {
 		this.project = project;
 	}
 	public int getSupportCnt() {
