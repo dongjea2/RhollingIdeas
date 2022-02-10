@@ -1,6 +1,7 @@
 package com.team.user.entity;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -40,6 +41,21 @@ public class Follow { //hashcode, equals 생성 필요
 	public void setFollow(List<Customer> follow) {
 		this.follow = follow;
 	}
-	
-	
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(follow, userNo);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Follow other = (Follow) obj;
+		return Objects.equals(follow, other.follow) && Objects.equals(userNo, other.userNo);
+	}
 }
