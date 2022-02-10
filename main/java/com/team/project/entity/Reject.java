@@ -66,6 +66,7 @@ public class Reject {
 		Reject other = (Reject) obj;
 		return Objects.equals(project, other.project);
 	}
-	
+
+
 	
 }

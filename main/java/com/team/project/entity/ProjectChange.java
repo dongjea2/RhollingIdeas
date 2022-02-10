@@ -12,14 +12,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "project_change")
 public class ProjectChange {
-	
+
 	@Id
-	private int projectNo;
-	
-	@MapsId //ProjectChange.projectNo 와 매핑
 	@OneToOne
 	@JoinColumn(name = "project_no")
 	private Project	project;
+
 	private int		supportCnt;
 	private String	projectStatus;
 	private int		sumPrice;
@@ -68,10 +66,10 @@ public class ProjectChange {
 	public void setProjectLikeCnt(int projectLikeCnt) {
 		this.projectLikeCnt = projectLikeCnt;
 	}
-
+	
 	@Override
 	public int hashCode() {
-		return Objects.hash(projectLikeCnt, projectNo, projectStatus, sumPrice, supportCnt);
+		return Objects.hash(project);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -82,10 +80,9 @@ public class ProjectChange {
 		if (getClass() != obj.getClass())
 			return false;
 		ProjectChange other = (ProjectChange) obj;
-		return projectLikeCnt == other.projectLikeCnt && Objects.equals(projectNo, other.projectNo)
-				&& Objects.equals(projectStatus, other.projectStatus) && sumPrice == other.sumPrice
-				&& supportCnt == other.supportCnt;
+		return Objects.equals(project, other.project);
 	}
+
 
 	
 	

@@ -51,11 +51,9 @@ public class Category {
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
-	
-	
 	@Override
 	public int hashCode() {
-		return Objects.hash(categoryName);
+		return Objects.hash(categoryNo);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -66,8 +64,9 @@ public class Category {
 		if (getClass() != obj.getClass())
 			return false;
 		Category other = (Category) obj;
-		return Objects.equals(categoryName, other.categoryName);
+		return categoryNo == other.categoryNo;
 	}
 
 	
+
 }
