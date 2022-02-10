@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.team.user.entity.Customer;
 
 
 
@@ -29,8 +29,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 	`user_no`	NUMBER(8)	NOT NULL
 */
 
-@Entity(name="comment")
-@Table
+@Entity
+@Table(name="comment")
 public class Comments {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,6 +50,65 @@ public class Comments {
 	@CreationTimestamp
 	@Column(name="comment_date")
 	private Date commentDate;
+
+	
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(commentNo);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Comments other = (Comments) obj;
+		return commentNo == other.commentNo;
+	}
+
+	public int getCommentNo() {
+		return commentNo;
+	}
+
+	public void setCommentNo(int commentNo) {
+		this.commentNo = commentNo;
+	}
+
+	public Post getPost() {
+		return post;
+	}
+
+	public void setPost(Post post) {
+		this.post = post;
+	}
+
+	public Customer getMaker() {
+		return maker;
+	}
+
+	public void setMaker(Customer maker) {
+		this.maker = maker;
+	}
+
+	public String getCommentContent() {
+		return commentContent;
+	}
+
+	public void setCommentContent(String commentContent) {
+		this.commentContent = commentContent;
+	}
+
+	public Date getCommentDate() {
+		return commentDate;
+	}
+
+	public void setCommentDate(Date commentDate) {
+		this.commentDate = commentDate;
+	}
 	
 	
 		
