@@ -1,5 +1,6 @@
-package com.team.order.entity;
+package com.team.payment.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
@@ -10,13 +11,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.team.project.entity.Project;
 import com.team.project.entity.Reward;
+import com.team.user.entity.Address;
+import com.team.user.entity.Card;
+import com.team.user.entity.Customer;
 
 /*
 	`payment_no`	NUMBER(8)	NOT NULL,
@@ -32,8 +35,8 @@ import com.team.project.entity.Reward;
 
 */
 @Entity
-@Table(name="orders")
-public class Order { //테이블 or 컬럼 이름 수정
+@Table(name="payment")
+public class Payment implements Serializable{ //테이블 or 컬럼 이름 수정
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "payment_no")
@@ -166,7 +169,7 @@ public class Order { //테이블 or 컬럼 이름 수정
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Order other = (Order) obj;
+		Payment other = (Payment) obj;
 		return paymentNo == other.paymentNo;
 	}
 }
