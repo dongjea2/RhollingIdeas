@@ -29,52 +29,75 @@ public class ProjectChange {
 	
 	
 	public ProjectChange() {     
-		super();
-		// TODO Auto-generated constructor stub
 	}
-	public ProjectChange(Project project, int supportCnt, String projectStatus, int sumPrice, int projectLikeCnt) {
-		super();
-		this.project = project;
-		this.supportCnt = supportCnt;
-		this.projectStatus = projectStatus;
-		this.sumPrice = sumPrice;
-		this.projectLikeCnt = projectLikeCnt;
+
+
+	public int getProjectNo() {
+		return projectNo;
 	}
-	public Project getProjectNo() {
+
+
+	public void setProjectNo(int projectNo) {
+		this.projectNo = projectNo;
+	}
+
+
+	public Project getProject() {
 		return project;
 	}
-	public void setProjectNo(Project project) {
+
+
+	public void setProject(Project project) {
 		this.project = project;
 	}
+
+
 	public int getSupportCnt() {
 		return supportCnt;
 	}
+
+
 	public void setSupportCnt(int supportCnt) {
 		this.supportCnt = supportCnt;
 	}
+
+
 	public String getProjectStatus() {
 		return projectStatus;
 	}
+
+
 	public void setProjectStatus(String projectStatus) {
 		this.projectStatus = projectStatus;
 	}
+
+
 	public int getSumPrice() {
 		return sumPrice;
 	}
+
+
 	public void setSumPrice(int sumPrice) {
 		this.sumPrice = sumPrice;
 	}
+
+
 	public int getProjectLikeCnt() {
 		return projectLikeCnt;
 	}
+
+
 	public void setProjectLikeCnt(int projectLikeCnt) {
 		this.projectLikeCnt = projectLikeCnt;
 	}
-	
+
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(project);
+		return Objects.hash(projectNo);
 	}
+
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -84,8 +107,13 @@ public class ProjectChange {
 		if (getClass() != obj.getClass())
 			return false;
 		ProjectChange other = (ProjectChange) obj;
-		return Objects.equals(project, other.project);
+		return projectNo == other.projectNo;
 	}
+
+
+
+	
+	
 
 
 	
