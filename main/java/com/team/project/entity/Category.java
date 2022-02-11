@@ -15,12 +15,11 @@ import javax.persistence.Table;
 */
 
 @Entity
-@Table
+@Table(name = "category")
 public class Category {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int categoryNo;
-	private int categoryP;
 	private String categoryName;
 
 	public Category() {
@@ -30,7 +29,6 @@ public class Category {
 	public Category(int categoryNo, int categoryP, String categoryName) {
 		super();
 		this.categoryNo = categoryNo;
-		this.categoryP = categoryP;
 		this.categoryName = categoryName;
 	}
 	public int getCategoryNo() {
@@ -39,12 +37,7 @@ public class Category {
 	public void setCategoryNo(int categoryNo) {
 		this.categoryNo = categoryNo;
 	}
-	public int getCategoryP() {
-		return categoryP;
-	}
-	public void setCategoryP(int categoryP) {
-		this.categoryP = categoryP;
-	}
+
 	public String getCategoryName() {
 		return categoryName;
 	}
