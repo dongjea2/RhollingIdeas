@@ -4,7 +4,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,7 +45,9 @@ public class Project {
 
 
 	//JOINED TABLE
-	@OneToOne(mappedBy = "project")	  
+	@OneToOne(mappedBy = "project",
+			  cascade = CascadeType.ALL)
+			  //,fetch = FetchType.EAGER)  
 	//저장 시 projectChange에 setProject해야함(관계의 주인 ProjectChange)
 	private ProjectChange projectChange;
 
