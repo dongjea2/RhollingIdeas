@@ -1,13 +1,16 @@
 package com.team.project.repository;
 
-import java.util.Optional;
+import javax.persistence.EntityManager;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.team.project.entity.Project;
 import com.team.project.entity.ProjectChange;
+import com.team.project.entity.QCategory;
 
 @SpringBootTest
 public class ProjectTest {
@@ -31,6 +34,7 @@ public class ProjectTest {
 	@Test
 	public void Test2() {
 		Project p = projectRepository.findByProjectNo(1);
+		p.setProjectBrief("테스트코드 3입니다. Fethc");
 		
 		p.getProjectChange().setProjectLikeCnt(400);
 		
@@ -62,5 +66,38 @@ public class ProjectTest {
 
 		projectChangeRepository.save(pc);
 	}
+	
+	@Autowired
+	EntityManager em;
+	
+	QCategory c = QCategory.category;
+	
+	@Test
+	public void queryDSL(){
+		
+		JPAQueryFactory query = new JPAQueryFactory(em);
+
+		
+	
+		query.select(c)
+				.from(c)
+				.where(c.categoryNo.gt(5))
+				.fetch();
+
+		query.selectFrom(c)
+				.where(cate(2))
+				.fetch();
+		
+    }
+	
+	public BooleanExpression cate(int a) {
+		if (a==1) {
+			return c.categoryNo.gt(5);
+		}else if(a==2) {
+			return c.categoryNo.gt(10);
+		}
+		return null;
+	}
+	
 
 }

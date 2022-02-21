@@ -6,4 +6,5 @@ import com.team.project.entity.Project;
 
 public interface ProjectRepository extends CrudRepository<Project, Integer> {
 	Project findByProjectNo(int id);
+	
 }
