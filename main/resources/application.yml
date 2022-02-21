@@ -1,8 +1,6 @@
 #서버 설정
 server:
   port: 9998
-  servlet:
-    context-path: /demo
 #스프링 설정
 spring:
   datasource:
@@ -13,12 +11,6 @@ spring:
       password: q1w2e3r4
       maximum-pool-size: 10
       minimum-idle: 2
-
-#맵리졸버 용 프리픽스
-  mvc:
-    view:
-      prefix: /WEB-INF/views/
-
   jpa:
     database: mysql
     #hibernate:
