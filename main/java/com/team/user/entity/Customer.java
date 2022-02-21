@@ -42,7 +42,6 @@ public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int	userNo;
-	@Column(nullable=false)
 	private String	userRole;
 	@Column(unique=true, nullable=false)
 	private String	userId;
@@ -51,13 +50,18 @@ public class Customer {
 	@Column(nullable=false)
 	private String	userPwd;
 	@CreationTimestamp
-	private Date	userSignupDate;
-	private String	userStatus; //DB에서 default '1'
-	private String	userImage; // DB에서 defulat 'files/user_image/default.png' ec2 경로설정 필요                  
-	private String	userPhone;                   
-	private String	userIntroduction;            
-	private String	userWebsite;
-	private String	userUrl; // DB에서 default설정 필요.                     
+	private Date userSignupDate;
+	private String userStatus; //DB에서 default '1'
+	private String userImage; // DB에서 defulat 'files/user_image/default.png' ec2 경로설정 필요                  
+	private String userPhone;                   
+	private String userIntroduction;            
+	private String userWebsite;
+	private String userUrl; // DB에서 default설정 필요.
+	private String userPrivacy;
+	private String messageAlarmCheck;
+	private String updatesAlarmCheck;
+	private String followAlarmCheck;
+	private String marketingAlarmCheck;
 		                                         
 	public Customer() {                              
 		super();                                  
