@@ -1,14 +1,16 @@
-package com.team.payment.repository;
+package com.team.order.repository;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.team.order.repository.OrderRepository;
+
 @SpringBootTest
-class PaymentRepositoryTest {
+class OrderRepositoryTest {
 	
 	@Autowired
-	private PaymentRepository repository;
+	private OrderRepository repository;
 	
 	@Test
 	void testFind() {

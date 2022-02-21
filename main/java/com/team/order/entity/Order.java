@@ -1,4 +1,4 @@
-package com.team.payment.entity;
+package com.team.order.entity;
 
 import java.util.Date;
 import java.util.Objects;
@@ -21,12 +21,12 @@ import com.team.user.entity.Card;
 import com.team.user.entity.Customer;
 
 /*
-	`payment_no`	NUMBER(8)	NOT NULL,
+	`order_no`	NUMBER(8)	NOT NULL,
 	`user_no`	NUMBER(8)	NOT NULL,
-	`payment_date`	DATE	NULL,
+	`order_date`	DATE	NULL,
 	`extra_price`	NUMBER(8)	NULL,
 	`total_price`	NUMBER(8)	NULL,
-	`payment_result`	VARCHAR2(10)	NULL,
+	`order_result`	VARCHAR2(10)	NULL,
 	`address_no`	NUMBER(8)	NOT NULL,
 	`card_no`	NUMBER(8)	NOT NULL,
 	`reward_no`	NUMBER(8)	NOT NULL,
@@ -34,20 +34,20 @@ import com.team.user.entity.Customer;
 
 */
 @Entity
-@Table(name="payment")
-public class Payment{ //테이블 or 컬럼 이름 수정
+@Table(name="orders")
+public class Order{ //테이블 or 컬럼 이름 수정
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "payment_no")
-	private int	paymentNo;
+	@Column(name = "order_no")
+	private int	orderNo;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_no")
 	private Customer orderUser;
 	
 	@CreationTimestamp
-	@Column(name = "payment_date")
-	private Date paymentDate;
+	@Column(name = "order_date")
+	private Date orderDate;
 	
 	@Column(name = "extra_price")
 	private int	extraPrice;
@@ -55,8 +55,8 @@ public class Payment{ //테이블 or 컬럼 이름 수정
 	@Column(name = "total_price")
 	private int	totalPrice;
 	
-	@Column(name = "payment_result")
-	private String paymentResult;
+	@Column(name = "order_result")
+	private String orderResult;
 	
 	@ManyToOne
 	@JoinColumn(name = "address_no")
@@ -75,12 +75,12 @@ public class Payment{ //테이블 or 컬럼 이름 수정
 	private Reward reward;
 	
 
-	public int getPaymentNo() {
-		return paymentNo;
+	public int getOrderNo() {
+		return orderNo;
 	}
 
-	public void setPaymentNo(int paymentNo) {
-		this.paymentNo = paymentNo;
+	public void setOrderNo(int orderNo) {
+		this.orderNo = orderNo;
 	}
 
 	public Customer getOrderUser() {
@@ -91,12 +91,12 @@ public class Payment{ //테이블 or 컬럼 이름 수정
 		this.orderUser = orderUser;
 	}
 
-	public Date getPaymentDate() {
-		return paymentDate;
+	public Date getOrderDate() {
+		return orderDate;
 	}
 
-	public void setPaymentDate(Date paymentDate) {
-		this.paymentDate = paymentDate;
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
 	}
 
 	public int getExtraPrice() {
@@ -115,12 +115,12 @@ public class Payment{ //테이블 or 컬럼 이름 수정
 		this.totalPrice = totalPrice;
 	}
 
-	public String getPaymentResult() {
-		return paymentResult;
+	public String getOrderResult() {
+		return orderResult;
 	}
 
-	public void setPaymentResult(String paymentResult) {
-		this.paymentResult = paymentResult;
+	public void setOrderResult(String orderResult) {
+		this.orderResult = orderResult;
 	}
 
 	public Address getAddress() {
@@ -157,7 +157,7 @@ public class Payment{ //테이블 or 컬럼 이름 수정
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(paymentNo);
+		return Objects.hash(orderNo);
 	}
 
 	@Override
@@ -168,7 +168,7 @@ public class Payment{ //테이블 or 컬럼 이름 수정
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Payment other = (Payment) obj;
-		return paymentNo == other.paymentNo;
+		Order other = (Order) obj;
+		return orderNo == other.orderNo;
 	}
 }
