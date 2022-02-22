@@ -4,11 +4,14 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "project_change")
@@ -18,8 +21,9 @@ public class ProjectChange {
 	private int projectNo;
 	
 	@MapsId
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "project_no")
+	@JsonIgnore
 	private Project	project;
 
 	private int		supportCnt;

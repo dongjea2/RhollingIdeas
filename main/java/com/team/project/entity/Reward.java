@@ -3,6 +3,7 @@ package com.team.project.entity;
 import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /*
 	`reward_no`	NUMBER(8)	NOT NULL,
@@ -38,8 +41,8 @@ public class Reward {
 
 	private int	rewardPrice       ;
 	private String	rewardName    ;
-	private int	deliverDate       ;
-	private int	rewardNum         ;
+	private Integer	deliverDate       ;
+	private Integer	rewardNum         ;
 	private int	rewardSalesCnt    ;
 	private String	itemName      ;
 	private String	deliverSelect ;
@@ -47,7 +50,7 @@ public class Reward {
 		super();
 	}
 	
-	public Reward(int rewardNo, Project projectNo, int rewardPrice, String rewardName, int deliverDate, int rewardNum,
+	public Reward(int rewardNo, Project projectNo, int rewardPrice, String rewardName, Integer deliverDate, Integer rewardNum,
 			int rewardSalesCnt, String itemName, String deliverSelect) {
 		super();
 		this.rewardNo = rewardNo;
@@ -85,16 +88,16 @@ public class Reward {
 	public void setRewardName(String rewardName) {
 		this.rewardName = rewardName;
 	}
-	public int getDeliverDate() {
+	public Integer getDeliverDate() {
 		return deliverDate;
 	}
-	public void setDeliverDate(int deliverDate) {
+	public void setDeliverDate(Integer deliverDate) {
 		this.deliverDate = deliverDate;
 	}
-	public int getRewardNum() {
+	public Integer getRewardNum() {
 		return rewardNum;
 	}
-	public void setRewardNum(int rewardNum) {
+	public void setRewardNum(Integer rewardNum) {
 		this.rewardNum = rewardNum;
 	}
 	public int getRewardSalesCnt() {
