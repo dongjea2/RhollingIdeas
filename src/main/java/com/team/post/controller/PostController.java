@@ -15,7 +15,7 @@ import com.team.post.service.PostService;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/projectdetail")
+@RequestMapping("/proejctdetail")
 public class PostController {
 
 	@Autowired
