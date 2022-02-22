@@ -41,7 +41,7 @@ public class Post {
 	private int	postNo;
 	
 	@ManyToOne
-	@JoinColumn(name="porject_no")
+	@JoinColumn(name="project_no")
 	private Project	project;
 	
 	@CreationTimestamp

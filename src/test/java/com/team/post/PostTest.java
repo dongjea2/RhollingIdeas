@@ -42,6 +42,15 @@ class PostTest {
 		PostRepository.findAll();
 	}
 	
+	@Test
+	void testfindbypjno() {
+		
+		Project project = new Project();
+		project.setProjectNo(1);
+		
+		PostRepository.findByProject(project);
+	}
+	
 	
 	
 
