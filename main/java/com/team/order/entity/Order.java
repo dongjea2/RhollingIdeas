@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +15,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.team.project.entity.Project;
 import com.team.project.entity.Reward;
 import com.team.user.entity.Address;
@@ -41,8 +43,9 @@ public class Order{ //테이블 or 컬럼 이름 수정
 	@Column(name = "order_no")
 	private int	orderNo;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_no")
+	@JsonIgnore
 	private Customer orderUser;
 	
 	@CreationTimestamp
@@ -50,7 +53,7 @@ public class Order{ //테이블 or 컬럼 이름 수정
 	private Date orderDate;
 	
 	@Column(name = "extra_price")
-	private int	extraPrice;
+	private Integer	extraPrice;
 	
 	@Column(name = "total_price")
 	private int	totalPrice;
@@ -68,6 +71,7 @@ public class Order{ //테이블 or 컬럼 이름 수정
 	
 	@ManyToOne
 	@JoinColumn(name = "project_no")
+	@JsonIgnore
 	private Project project;
 	
 	@ManyToOne
@@ -99,11 +103,11 @@ public class Order{ //테이블 or 컬럼 이름 수정
 		this.orderDate = orderDate;
 	}
 
-	public int getExtraPrice() {
+	public Integer getExtraPrice() {
 		return extraPrice;
 	}
 
-	public void setExtraPrice(int extraPrice) {
+	public void setExtraPrice(Integer extraPrice) {
 		this.extraPrice = extraPrice;
 	}
 

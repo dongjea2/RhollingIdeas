@@ -17,6 +17,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.team.user.entity.Customer;
 
 
@@ -59,10 +60,10 @@ public class Project {
 	@JoinColumn(name = "user_no")
 	private Customer maker;
 	
-	@OneToMany(mappedBy = "project")
-	//저장 시 Reward에 setProject해야함
-	//프로젝트 삭제시 리워드도 자동삭제
-	private List<Reward> reward;
+//	@OneToMany(mappedBy = "project")
+//	//저장 시 Reward에 setProject해야함
+//	//프로젝트 삭제시 리워드도 자동삭제
+//	private List<Reward> reward;
 	                                  
 
 	public Project() {
@@ -156,14 +157,14 @@ public class Project {
 	}
 
 
-	public List<Reward> getReward() {
-		return reward;
-	}
-
-
-	public void setReward(List<Reward> reward) {
-		this.reward = reward;
-	}
+//	public List<Reward> getReward() {
+//		return reward;
+//	}
+//
+//
+//	public void setReward(List<Reward> reward) {
+//		this.reward = reward;
+//	}
 
 
 	public Category getCategory() {
