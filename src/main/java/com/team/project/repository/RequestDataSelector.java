@@ -2,13 +2,14 @@ package com.team.project.repository;
 
 public class RequestDataSelector {
 
-	int category; //service쪽에서 카테고리 null 값받으면 String값 "all" 넣어서 전달
-	int editorPick;
-	String ongoing;
-	int achiveRate;
-	String sort;
-	String rowCount;
-	String loginedUserNo;
+	private int category; //service쪽에서 카테고리 null 값받으면 String값 "all" 넣어서 전달
+	private int editorPick;
+	private String ongoing;
+	private int achiveRate;
+	private String sort;
+	private String rowCount;
+	private String loginedUserNo;
+
 	public int getCategory() {
 		return category;
 	}
