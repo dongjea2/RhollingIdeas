@@ -60,15 +60,15 @@ public class Project {
 	@JoinColumn(name = "user_no")
 	private Customer maker;
 	
-//	@OneToMany(mappedBy = "project")
-//	//저장 시 Reward에 setProject해야함
-//	//프로젝트 삭제시 리워드도 자동삭제
-//	private List<Reward> reward;
+	@OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
+	//저장 시 Reward에 setProject해야함
+	//프로젝트 삭제시 리워드도 자동삭제
+	@JsonIgnore
+	private List<Reward> reward;
 	                                  
 
 	public Project() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 
@@ -157,14 +157,14 @@ public class Project {
 	}
 
 
-//	public List<Reward> getReward() {
-//		return reward;
-//	}
-//
-//
-//	public void setReward(List<Reward> reward) {
-//		this.reward = reward;
-//	}
+	public List<Reward> getReward() {
+		return reward;
+	}
+
+
+	public void setReward(List<Reward> reward) {
+		this.reward = reward;
+	}
 
 
 	public Category getCategory() {

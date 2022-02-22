@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,6 +17,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.team.user.entity.Customer;
 
 
@@ -36,8 +38,9 @@ public class Comments {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int commentNo;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="post_no")
+	@JsonIgnore
 	private Post post;
 	
 	@ManyToOne

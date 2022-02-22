@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.team.project.entity.Project;
 import com.team.user.entity.Customer;
 
@@ -57,14 +58,12 @@ public class Post {
 	@ManyToOne
 	@JoinColumn(name="user_no")
 	private Customer maker;
-	
+		
 	@OneToMany(cascade = CascadeType.ALL
 			,  fetch = FetchType.LAZY)
 	@JoinColumn(name="post_no")
 	private List<Comments> comments;
 
-
-	
 	
 	@Override
 	public int hashCode() {

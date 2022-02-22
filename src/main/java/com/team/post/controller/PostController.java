@@ -1,29 +1,32 @@
 package com.team.post.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.team.post.entity.Post;
 import com.team.post.service.PostService;
+import com.team.project.entity.Project;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/proejctdetail")
+@RequestMapping("/projectdetail")
 public class PostController {
 
 	@Autowired
 	private PostService service;
 	
-	@GetMapping("/post/{}")
-	public Object post(@RequestBody Post p) {
-	
-		return service.findByProject(p.getProject());
+	@GetMapping("/post/{projectNo}")
+	public Object post(@PathVariable(name = "projectNo")int projectNo) {
+		
+		Project project = new Project();
+		project.setProjectNo(projectNo);
+		
+		return service.findByProject(project);
 	}
+	
+	
+	
 }
