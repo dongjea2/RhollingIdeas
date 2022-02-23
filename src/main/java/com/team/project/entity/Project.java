@@ -32,7 +32,7 @@ public class Project {
 	private String	projectBrief  ;   
 	private String	editorPick    ;   
 	private String	projectImage  ;   
-	private int		targetPrice   ;   
+	private Integer		targetPrice   ;   
 	private Date	startDate     ;   
 	private Date	endDate       ;   
 	private String	shortTitle    ;   
@@ -107,22 +107,29 @@ public class Project {
 	}
 
 
+
 	public String getRemainingDays() {
-		Date endDate=this.getEndDate();
-		Date sysDate = new Date();
-		
-		long diffDay = (endDate.getTime() - sysDate.getTime()) /(24*60*60*1000);
-		
-		if(diffDay>=0) {
-			return diffDay+"일 남음";
+		if(endDate != null) {
+			Date endDate=this.getEndDate();
+			Date sysDate = new Date();
+			
+			long diffDay = (endDate.getTime() - sysDate.getTime()) /(24*60*60*1000);
+			
+			if(diffDay>=0) {
+				return diffDay+"일 남음";
+			}
+			
+			else {
+				return Math.abs(diffDay)+"일 지남";
+			}
 		}
-		
-		else {
-			return Math.abs(diffDay)+"일 지남";
-		}
+		return null;
 	}
 
 	public int getAchiveRate() {
+		if(targetPrice == null) {
+			return 0;
+		}
 		double achiveRate = this.getProjectChange().getSumPrice() / (double)this.getTargetPrice()  *100; 
 		System.out.println((int)achiveRate);
 		return (int)achiveRate;
@@ -219,12 +226,12 @@ public class Project {
 	}
 
 
-	public int getTargetPrice() {
+	public Integer getTargetPrice() {
 		return targetPrice;
 	}
 
 
-	public void setTargetPrice(int targetPrice) {
+	public void setTargetPrice(Integer targetPrice) {
 		this.targetPrice = targetPrice;
 	}
 
