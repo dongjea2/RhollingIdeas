@@ -1,8 +1,11 @@
-package com.team.interest.repository;
+package com.team.interest;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import com.team.interest.repository.InterestRepository;
+import com.team.user.entity.Customer;
 
 @SpringBootTest
 class InterestRepositoryTest {
@@ -12,5 +15,10 @@ class InterestRepositoryTest {
 	void testFindAll() {
 		repository.findAll();
 	}
-
+	@Test
+	void testFindInterest() {
+		Customer c = new Customer();
+		c.setUserNo(1);
+		repository.findByLikeUserAndInterestAlarm(c, "A");
+	}
 }
