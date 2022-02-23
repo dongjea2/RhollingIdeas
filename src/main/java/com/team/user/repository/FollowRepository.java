@@ -11,4 +11,6 @@ public interface FollowRepository extends CrudRepository<Follow, FollowId> {
 
 	public List<Follow> findByUserNo(Customer c);
 
+	public List<Follow> findByFollow(Customer c);
+
 }
