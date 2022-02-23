@@ -84,7 +84,6 @@ public class MainPageQueryDdsTest {
 	}
 	
 	
-	
 	public void getNames(List<Project> list) {
 		for(Project p : list) {
 			//log.info("제목: "+p.getLongTitle());

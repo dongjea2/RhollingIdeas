@@ -124,6 +124,11 @@ public class QueryRepository {
 	
 	
 	//orderBy
+	/**
+	 * 
+	 * @param sort("likeCnt")
+	 * @return
+	 */
 	private OrderSpecifier<?> sort(String sort) {
 	
 		if(sort == "likeCnt") {
