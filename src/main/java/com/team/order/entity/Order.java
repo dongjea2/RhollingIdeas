@@ -45,7 +45,6 @@ public class Order{ //테이블 or 컬럼 이름 수정
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_no")
-	@JsonIgnore
 	private Customer orderUser;
 	
 	@CreationTimestamp
@@ -71,7 +70,6 @@ public class Order{ //테이블 or 컬럼 이름 수정
 	
 	@ManyToOne
 	@JoinColumn(name = "project_no")
-	@JsonIgnore
 	private Project project;
 	
 	@ManyToOne
