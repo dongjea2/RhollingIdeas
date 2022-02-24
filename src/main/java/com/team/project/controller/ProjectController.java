@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.team.project.entity.Category;
 import com.team.project.entity.Project;
 import com.team.project.entity.Reward;
 import com.team.project.service.ProjectService;
@@ -51,8 +52,16 @@ public class ProjectController {
 //		if(c != null) {
 //
 //		}
+				
 		List<Project> list = service.createdProject(c);
+		
 		return list;
+	}
+	
+	@GetMapping("/category")
+	public List<Category> categorylist(){
+		List<Category> category = service.findAllCategory();
+		return category;
 	}
 	
 	
