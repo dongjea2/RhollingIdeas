@@ -21,7 +21,6 @@ public class CustomerController {
 	
 	@PostMapping("/login")
 	public Object login(@RequestBody Customer c) {
-		System.out.println(c);
 		Map<String, Object> returnMap = new HashMap<>();
 		Customer c2 = service.login(c.getUserId(), c.getUserPwd());
 		if(c2==null) {
@@ -53,7 +52,6 @@ public class CustomerController {
 	
 	@PostMapping("/signup")
 	public Object signup(@RequestBody Customer c) {
-		System.out.println(c.getUserId() + " " +c.getUserPwd() + " " +c.getUserName());
 		Map<String, Object> returnMap = new HashMap<>();
 		Customer c2 = service.findByUserId(c.getUserId());
 		if(c2 == null) {

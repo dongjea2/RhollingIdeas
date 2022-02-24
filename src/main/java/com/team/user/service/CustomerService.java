@@ -32,4 +32,8 @@ public class CustomerService {
 		Customer c2 = new Customer(userName, userId, userPwd);
 		customerRepo.save(c2);
 	}
+	
+	public void profileSet(Customer customer) {
+		customerRepo.save(customer);
+	}
 }
