@@ -29,6 +29,10 @@ public class ProjectService {
 		return rewardRepository.findByRewardNo(rewardNo);
 	}
 	
+	public List<Reward> findByProjectNo(Project p) {
+		return rewardRepository.findByProject(p);
+	}
+	
 	/**
 	 * 로그인한 유저가 만든 프로젝트 리스트를 반환한다
 	 * @param c 프로젝트 만든 유저 객체

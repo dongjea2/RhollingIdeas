@@ -34,6 +34,21 @@ public class ProjectController {
 
 		return reward;
 	}
+	
+	@GetMapping("/rewardlist/{projectNo}")
+	public Object rewardlist(@PathVariable(name = "projectNo")int projectNo){
+		
+		Project project = new Project();
+		project.setProjectNo(projectNo);
+		
+		return service.findByProjectNo(project);
+	}
+	
+	
+	
+	
+	
+	
 
 	@GetMapping("/mainpage")
 	public Object mainpage() {
