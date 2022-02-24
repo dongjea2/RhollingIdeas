@@ -31,11 +31,6 @@ public class PostController {
 	
 	@PostMapping("/post")
 	public Object postwrite(@RequestBody Post p) {
-		
-		System.out.println(p.getPostContent());
-		System.out.println(p.getProject().getProjectNo());
-		System.out.println(p.getMaker().getUserNo());
-		
 		return service.postwrite(p);
 	}
 	

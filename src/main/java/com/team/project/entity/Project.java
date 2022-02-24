@@ -60,7 +60,7 @@ public class Project {
 	@JoinColumn(name = "user_no")
 	private Customer maker;
 	
-	@OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "project",fetch = FetchType.EAGER )
 	//저장 시 Reward에 setProject해야함
 	//프로젝트 삭제시 리워드도 자동삭제
 	@JsonIgnore

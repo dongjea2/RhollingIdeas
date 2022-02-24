@@ -1,5 +1,7 @@
 package com.team.project.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.junit.jupiter.api.Test;
@@ -12,6 +14,8 @@ import com.team.project.entity.Project;
 import com.team.project.entity.ProjectChange;
 import com.team.project.entity.QCategory;
 import com.team.user.entity.Customer;
+import com.team.project.entity.Reward;
+
 
 @SpringBootTest
 public class ProjectTest {
@@ -68,38 +72,17 @@ public class ProjectTest {
 		projectChangeRepository.save(pc);
 	}
 	
-	@Autowired
-	EntityManager em;
-	
-	QCategory c = QCategory.category;
-	
 	@Test
-	public void queryDSL(){
+	public void Test4() {
+		Project p = projectRepository.findByProjectNo(1);
 		
-		JPAQueryFactory query = new JPAQueryFactory(em);
+		List<Reward> list = p.getReward();
 
-		
-	
-		query.select(c)
-				.from(c)
-				.where(c.categoryNo.gt(5))
-				.fetch();
-
-		query.selectFrom(c)
-				.where(cate(2))
-				.fetch();
-		
-    }
-	
-	public BooleanExpression cate(int a) {
-		if (a==1) {
-			return c.categoryNo.gt(5);
-		}else if(a==2) {
-			return c.categoryNo.gt(10);
+		for( Reward r : list ) {
+			System.out.println(r.getRewardNo());
 		}
-		return null;
+
 	}
-	
 	@Test
 	public void testCreatedProject() {
 		Customer c = new Customer();

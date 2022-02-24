@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.team.project.entity.Category;
 import com.team.project.entity.Project;
 import com.team.project.entity.Reward;
+import com.team.project.repository.CategoryRepository;
 import com.team.project.repository.ProjectRepository;
 import com.team.project.repository.RewardRepository;
 import com.team.user.entity.Customer;
@@ -20,8 +22,15 @@ public class ProjectService {
 	@Autowired
 	private ProjectRepository projectRepository;
 	
+	@Autowired
+	private CategoryRepository categoryRepository;
+	
 	public Reward findByRewardNo(int rewardNo) {
 		return rewardRepository.findByRewardNo(rewardNo);
+	}
+	
+	public List<Reward> findByProjectNo(Project p) {
+		return rewardRepository.findByProject(p);
 	}
 	
 	/**
@@ -31,5 +40,9 @@ public class ProjectService {
 	 */
 	public List<Project> createdProject(Customer c) {
 		return projectRepository.findByMaker(c);
+	}
+	
+	public List<Category> findAllCategory() {
+		return (List<Category>) categoryRepository.findAll();
 	}
 }
