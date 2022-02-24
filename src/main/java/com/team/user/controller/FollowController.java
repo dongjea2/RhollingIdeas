@@ -23,7 +23,7 @@ public class FollowController {
 	public List<Follow> following(HttpSession session) {
 		//Customer c = (Customer)session.getAttribute("loginInfo");
 		Customer c = new Customer();
-		c.setUserNo(5);
+		c.setUserNo(1);
 		
 //		if(c != null) {
 //
@@ -35,7 +35,7 @@ public class FollowController {
 	@GetMapping("/followers")
 	public List<Follow> followers(HttpSession session) {
 		Customer c = new Customer();
-		c.setUserNo(4);
+		c.setUserNo(1);
 		
 		List<Follow> list = service.followers(c);
 		return list;

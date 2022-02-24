@@ -11,6 +11,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.team.project.entity.Project;
 import com.team.project.entity.ProjectChange;
 import com.team.project.entity.QCategory;
+import com.team.user.entity.Customer;
 
 @SpringBootTest
 public class ProjectTest {
@@ -99,5 +100,12 @@ public class ProjectTest {
 		return null;
 	}
 	
+	@Test
+	public void testCreatedProject() {
+		Customer c = new Customer();
+		c.setUserNo(1);
+		
+		projectRepository.findByMaker(c);
+	}
 
 }
