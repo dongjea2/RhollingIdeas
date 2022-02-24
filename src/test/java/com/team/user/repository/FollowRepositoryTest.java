@@ -50,4 +50,23 @@ class FollowRepositoryTest {
 		
 		repository.save(follow);
 	}
+	@Test
+	void testFindByFollow() {
+		Customer c = new Customer();
+		c.setUserNo(1);
+		repository.findByFollow(c);
+	}
+	@Test
+	void testDelete() {
+		Customer c1 = new Customer();
+		c1.setUserNo(1);
+		
+		Customer c2 = new Customer();
+		c2.setUserNo(17);
+		
+		Follow follow = new Follow();
+		follow.setUserNo(c1);
+		follow.setFollow(c2);
+		repository.delete(follow);
+	}
 }
