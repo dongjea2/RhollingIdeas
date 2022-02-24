@@ -38,10 +38,6 @@ public class OrderController {
 	public Object orderReward(@RequestBody Order order) {
 		Map<String, Object> returnMap = new HashMap<>();
 		
-		System.out.println("최종 가격 : "+order.getExtraPrice());
-		System.out.println("프로젝트 번호 : "+order.getProject().getProjectNo());
-		System.out.println("구매자 ID : "+order.getOrderUser().getUserNo());
-		
 		order.setOrderResult("진행중");
 
 		if( 1 != order.getOrderUser().getUserNo()) {
