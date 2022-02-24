@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.team.project.entity.Category;
 import com.team.project.entity.Project;
+import com.team.project.entity.ProjectDTO;
 import com.team.project.entity.Reward;
 import com.team.project.service.ProjectService;
 import com.team.user.entity.Customer;
@@ -41,6 +42,20 @@ public class ProjectController {
 
 
 		return returnMap;
+	}
+
+	@GetMapping("/project")
+	public Object getProject() {
+		ProjectDTO project = new ProjectDTO();
+		project.entityToDTO(service.findByProjectNo(1));
+		project.setLoginedUserProjectInterest(true);
+		
+		for( Reward r : service.findByProjectNo(1).getReward()) {
+			System.out.println("상품 번호 : "+r.getRewardNo());
+		}
+	
+		
+		return project;
 	}
 	
 	@GetMapping("/created")
