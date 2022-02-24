@@ -30,29 +30,20 @@ public class OrderService {
 	 * 주문번호를 통해 주문정보를 불러온다
 	 * @param order_no 주문번호
 	 * @return 주문정보
-	 * @throws FindException
 	 */
-	public Order findByOrderNo(int order_no) throws FindException {
-		try {
-			Optional<Order> optP = repository.findById(order_no);
-			Order p = new Order();
-			if(optP.isPresent()) {
-				p = optP.get();
-				return p;
-			}
-			throw new FindException();
-		} catch(Exception e) {
-			throw new FindException("주문번호에 해당하는 주문정보를 불러오는데 실패했습니다.");
-		}
+	public Order findByOrderNo(int order_no) {
+		Optional<Order> optP = repository.findById(order_no);
+		Order p = new Order();
+		p = optP.get();
+		return p;
 	}
 	
 	/**
 	 * 사용자가 주문한 목록을 반환한다
 	 * @param userNo 유저번호
 	 * @return 주문한 목록들
-	 * @throws FindException
 	 */
-	public List<Order> myOrderProjects(int userNo) throws FindException{
+	public List<Order> myOrderProjects(int userNo){
 		Customer c = new Customer();
 		c.setUserNo(userNo);
 		
