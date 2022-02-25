@@ -36,16 +36,24 @@ public class ProjectController {
 		return reward;
 	}
 	
-	@GetMapping("/rewardlist/{projectNo}")
-	public Object rewardlist(@PathVariable(name = "projectNo")int projectNo){
+	/*
+	 * @GetMapping("/rewardlist/{projectNo}") public Object
+	 * rewardlist(@PathVariable(name = "projectNo")int projectNo){
+	 * 
+	 * Project project = new Project(); project.setProjectNo(projectNo);
+	 * 
+	 * return service.findByProjectNo(project); }
+	 */
+	
+	//DTO사용 코드
+	@GetMapping("/project")
+	public Object getProject() {
+		ProjectDTO project = new ProjectDTO();
+		project.entityToDTO(service.findByProjectNo(1));
+		project.setLoginedUserProjectInterest(true);
 		
-		Project project = new Project();
-		project.setProjectNo(projectNo);
-		
-		return service.findByProjectNo(project);
+		return project;
 	}
-	
-	
 	
 	
 	
@@ -59,19 +67,7 @@ public class ProjectController {
 		return returnMap;
 	}
 
-	@GetMapping("/project")
-	public Object getProject() {
-		ProjectDTO project = new ProjectDTO();
-		project.entityToDTO(service.findByProjectNo(1));
-		project.setLoginedUserProjectInterest(true);
-		
-		for( Reward r : service.findByProjectNo(1).getReward()) {
-			System.out.println("상품 번호 : "+r.getRewardNo());
-		}
-	
-		
-		return project;
-	}
+
 	
 	@GetMapping("/created")
 	public List<Project> createdprojects() {

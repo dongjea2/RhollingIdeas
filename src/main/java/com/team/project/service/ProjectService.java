@@ -29,8 +29,13 @@ public class ProjectService {
 		return rewardRepository.findByRewardNo(rewardNo);
 	}
 	
-	public List<Reward> findByProjectNo(Project p) {
-		return rewardRepository.findByProject(p);
+	//public List<Reward> findByProjectNo(Project p) {
+	//	return rewardRepository.findByProject(p);
+	//}
+	
+	
+	public Project findByProjectNo(int projectNo) {
+		return projectRepository.findByProjectNo(projectNo);
 	}
 	
 	/**
