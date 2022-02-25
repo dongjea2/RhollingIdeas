@@ -46,10 +46,10 @@ public class ProjectController {
 	 */
 	
 	//DTO사용 코드
-	@GetMapping("/project")
-	public Object getProject() {
+	@GetMapping("/project/{projectNo}")
+	public Object getProject(@PathVariable(name = "projectNo")int projectNo) {
 		ProjectDTO project = new ProjectDTO();
-		project.entityToDTO(service.findByProjectNo(1));
+		project.entityToDTO(service.findByProjectNo(projectNo));
 		project.setLoginedUserProjectInterest(true);
 		
 		return project;
