@@ -50,4 +50,9 @@ public class ProjectService {
 	public List<Category> findAllCategory() {
 		return (List<Category>) categoryRepository.findAll();
 	}
+
+	public Object save(Project p) {
+		// TODO Auto-generated method stub
+		return projectRepository.save(p);
+	}
 }
