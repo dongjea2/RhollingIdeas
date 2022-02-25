@@ -19,4 +19,11 @@ public interface CustomerRepository extends CrudRepository<Customer, Integer> {
 	 * @return
 	 */
 	public Customer findByUserId(String userId);
+	
+	/**
+	 * 유저 프로필 조회
+	 * @param userUrl
+	 * @return
+	 */
+	public Customer findByUserUrl(String userUrl);
 }

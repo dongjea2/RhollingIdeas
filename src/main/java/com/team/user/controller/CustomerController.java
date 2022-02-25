@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,5 +65,12 @@ public class CustomerController {
 			returnMap.put("msg", "가입실패");
 		}
 		return returnMap;
+	}
+	
+
+	@GetMapping("/profile/{userUrl}")
+	public Customer profile(@PathVariable String userUrl) {
+		Customer c = service.findByUserUrl(userUrl);
+		return c;
 	}
 }
