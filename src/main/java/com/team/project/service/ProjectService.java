@@ -1,15 +1,20 @@
 package com.team.project.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.team.interest.repository.InterestRepository;
 import com.team.project.entity.Category;
 import com.team.project.entity.Project;
+import com.team.project.entity.ProjectDTO;
 import com.team.project.entity.Reward;
 import com.team.project.repository.CategoryRepository;
 import com.team.project.repository.ProjectRepository;
+import com.team.project.repository.QueryRepository;
+import com.team.project.repository.RequestDataSelector;
 import com.team.project.repository.RewardRepository;
 import com.team.user.entity.Customer;
 
@@ -18,24 +23,67 @@ public class ProjectService {
 	
 	@Autowired
 	private RewardRepository rewardRepository;
-
 	@Autowired
 	private ProjectRepository projectRepository;
-	
 	@Autowired
 	private CategoryRepository categoryRepository;
+	@Autowired
+	private InterestRepository interestRepository;
+	@Autowired
+	private QueryRepository queryRepository;
+
+	Customer loginedUser;
+	
+	public ProjectService() {
+		final int LOGINED_USER_NO= 1;
+		loginedUser = new Customer();
+		loginedUser.setUserNo(LOGINED_USER_NO);
+	}
+
+	public ProjectDTO findByProjectNo(int projectNo) {
+		//임시 유저 생성(세션완성되면 세션에서 받아올것)
+		ProjectDTO dto = new ProjectDTO();
+		
+		Project p =projectRepository.findByProjectNo(projectNo);
+		
+		//check User interest(로그인 안되있으면 조회도 안되게 수정할것)
+		if(isLoginedUserThisProjectInterested(p)) {
+			dto.setLoginedUserProjectInterest(true);
+		}
+		
+		dto.entityToDTO(p);
+		return dto;
+	}
+	
+	private boolean isLoginedUserThisProjectInterested(Project p) {
+		if (interestRepository.findByLikeProjectAndLikeUser(p,loginedUser) == null) {
+			return false;
+		}
+		return true;
+	}
+
+	public List<ProjectDTO> findByRDS(RequestDataSelector rds) {
+
+		List<ProjectDTO> dtoList = new ArrayList<ProjectDTO>();
+		List<Project> list =queryRepository.findByRequestData(rds);
+		
+		for(Project p : list) {
+			ProjectDTO dto = new ProjectDTO();
+			dto.entityToDTO(p);
+			dto.setReward(null);
+
+			if(isLoginedUserThisProjectInterested(p)) {
+				dto.setLoginedUserProjectInterest(true);
+			}
+			dtoList.add(dto);
+		}
+
+		return dtoList;
+	}
+	
 	
 	public Reward findByRewardNo(int rewardNo) {
 		return rewardRepository.findByRewardNo(rewardNo);
-	}
-	
-	//public List<Reward> findByProjectNo(Project p) {
-	//	return rewardRepository.findByProject(p);
-	//}
-	
-	
-	public Project findByProjectNo(int projectNo) {
-		return projectRepository.findByProjectNo(projectNo);
 	}
 	
 	/**

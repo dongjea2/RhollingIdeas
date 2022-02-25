@@ -1,12 +1,10 @@
 package com.team.project.entity;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import com.team.user.entity.Customer;
 
-public class ProjectDTO {
+public class ProjectLiteDTO {
 	private int		projectNo     ;   
 	private String	longTitle     ;   
 	private String	projectBrief  ;   
@@ -24,7 +22,6 @@ public class ProjectDTO {
 	private ProjectChange projectChange;
 	private Category category;
 	private Customer maker;
-	private List<RewardDTO> reward;
 	
 	
 	public void entityToDTO(Project p) {
@@ -43,37 +40,11 @@ public class ProjectDTO {
 		this.projectChange= p.getProjectChange();
 		this.category= p.getCategory();
 		this.maker= p.getMaker ();
-		this.reward = new ArrayList<>();
-
-		for(Reward r :p.getReward()) {
-			RewardDTO dto = new RewardDTO();
-			dto.entityToDTO(r);
-			this.reward.add(dto);
-		}
-		
-	}
-	
-	
-	public boolean isLoginedUserProjectInterest() {
-		return loginedUserProjectInterest;
-	}
-	public void setLoginedUserProjectInterest(boolean loginedUserProjectInterest) {
-		this.loginedUserProjectInterest = loginedUserProjectInterest;
-	}
-
-
-	public void setReward(List<RewardDTO> reward) {
-		this.reward = reward;
 	}
 
 
 	public int getProjectNo() {
 		return projectNo;
-	}
-
-
-	public List<RewardDTO> getReward() {
-		return reward;
 	}
 
 
@@ -127,6 +98,11 @@ public class ProjectDTO {
 	}
 
 
+	public boolean isLoginedUserProjectInterest() {
+		return loginedUserProjectInterest;
+	}
+
+
 	public ProjectChange getProjectChange() {
 		return projectChange;
 	}
@@ -140,7 +116,6 @@ public class ProjectDTO {
 	public Customer getMaker() {
 		return maker;
 	}
-	
 	
 	
 }

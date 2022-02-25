@@ -14,6 +14,7 @@ import com.team.project.entity.Category;
 import com.team.project.entity.Project;
 import com.team.project.entity.ProjectDTO;
 import com.team.project.entity.Reward;
+import com.team.project.repository.RequestDataSelector;
 import com.team.project.service.ProjectService;
 import com.team.user.entity.Customer;
 
@@ -49,11 +50,7 @@ public class ProjectController {
 	//DTO사용 코드
 	@GetMapping("/project/{projectNo}")
 	public Object getProject(@PathVariable(name = "projectNo")int projectNo) {
-		ProjectDTO project = new ProjectDTO();
-		project.entityToDTO(service.findByProjectNo(projectNo));
-		project.setLoginedUserProjectInterest(true);
-		
-		return project;
+		return service.findByProjectNo(projectNo);
 	}
 	
 	
@@ -63,7 +60,8 @@ public class ProjectController {
 	@GetMapping("/mainpage")
 	public Object mainpage() {
 		Map<String, Object> returnMap = new HashMap<>();
-
+		RequestDataSelector rds = new RequestDataSelector();
+		returnMap.put("attention", service.findByRDS(rds));
 
 		return returnMap;
 	}
