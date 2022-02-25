@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.team.project.entity.Category;
@@ -36,16 +37,24 @@ public class ProjectController {
 		return reward;
 	}
 	
-	@GetMapping("/rewardlist/{projectNo}")
-	public Object rewardlist(@PathVariable(name = "projectNo")int projectNo){
+	/*
+	 * @GetMapping("/rewardlist/{projectNo}") public Object
+	 * rewardlist(@PathVariable(name = "projectNo")int projectNo){
+	 * 
+	 * Project project = new Project(); project.setProjectNo(projectNo);
+	 * 
+	 * return service.findByProjectNo(project); }
+	 */
+	
+	//DTO사용 코드
+	@GetMapping("/project/{projectNo}")
+	public Object getProject(@PathVariable(name = "projectNo")int projectNo) {
+		ProjectDTO project = new ProjectDTO();
+		project.entityToDTO(service.findByProjectNo(projectNo));
+		project.setLoginedUserProjectInterest(true);
 		
-		Project project = new Project();
-		project.setProjectNo(projectNo);
-		
-		return service.findByProjectNo(project);
+		return project;
 	}
-	
-	
 	
 	
 	
@@ -59,19 +68,11 @@ public class ProjectController {
 		return returnMap;
 	}
 
-	@GetMapping("/project")
-	public Object getProject() {
-		ProjectDTO project = new ProjectDTO();
-		project.entityToDTO(service.findByProjectNo(1));
-		project.setLoginedUserProjectInterest(true);
-		
-		for( Reward r : service.findByProjectNo(1).getReward()) {
-			System.out.println("상품 번호 : "+r.getRewardNo());
-		}
-	
-		
-		return project;
+	@PostMapping("/projectwrite")
+	public Object projectwrite(Project p) {
+		return service.save(p);
 	}
+
 	
 	@GetMapping("/created")
 	public List<Project> createdprojects() {

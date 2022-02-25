@@ -29,8 +29,13 @@ public class ProjectService {
 		return rewardRepository.findByRewardNo(rewardNo);
 	}
 	
-	public List<Reward> findByProjectNo(Project p) {
-		return rewardRepository.findByProject(p);
+	//public List<Reward> findByProjectNo(Project p) {
+	//	return rewardRepository.findByProject(p);
+	//}
+	
+	
+	public Project findByProjectNo(int projectNo) {
+		return projectRepository.findByProjectNo(projectNo);
 	}
 	
 	/**
@@ -44,5 +49,10 @@ public class ProjectService {
 	
 	public List<Category> findAllCategory() {
 		return (List<Category>) categoryRepository.findAll();
+	}
+
+	public Object save(Project p) {
+		// TODO Auto-generated method stub
+		return projectRepository.save(p);
 	}
 }
