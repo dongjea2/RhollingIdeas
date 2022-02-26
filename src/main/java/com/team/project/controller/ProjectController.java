@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.team.project.dto.ProjectDTO;
 import com.team.project.entity.Category;
 import com.team.project.entity.Project;
-import com.team.project.entity.ProjectDTO;
 import com.team.project.entity.Reward;
 import com.team.project.repository.RequestDataSelector;
 import com.team.project.service.ProjectService;
@@ -61,6 +61,7 @@ public class ProjectController {
 	public Object mainpage() {
 		Map<String, Object> returnMap = new HashMap<>();
 		RequestDataSelector rds = new RequestDataSelector();
+		rds.setLimit(8);
 		returnMap.put("attention", service.findByRDS(rds));
 
 		return returnMap;
