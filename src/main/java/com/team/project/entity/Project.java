@@ -90,6 +90,12 @@ public class Project {
 	}
 
 	
+	public boolean isProjectFundingStarted() {
+		if (startDate.before(new Date())) {
+			return true;
+		}
+		return false;
+	}
 
 	public int getProjectNo() {
 		return projectNo;
@@ -108,22 +114,14 @@ public class Project {
 
 
 
-	public String getRemainingDays() {
-		if(endDate != null) {
-			Date endDate=this.getEndDate();
-			Date sysDate = new Date();
-			
-			long diffDay = (endDate.getTime() - sysDate.getTime()) /(24*60*60*1000);
-			
-			if(diffDay>=0) {
-				return diffDay+"일 남음";
-			}
-			
-			else {
-				return Math.abs(diffDay)+"일 지남";
-			}
+	public long getRemainingDays() {
+		if(endDate == null) {
+			return 0;
 		}
-		return null;
+		Date endDate=this.getEndDate();
+		Date sysDate = new Date();
+		long diffDay = (endDate.getTime() - sysDate.getTime()) /(24*60*60*1000);
+		return diffDay;
 	}
 
 	public int getAchiveRate() {
