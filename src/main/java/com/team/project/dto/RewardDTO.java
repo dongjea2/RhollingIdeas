@@ -1,4 +1,6 @@
-package com.team.project.entity;
+package com.team.project.dto;
+
+import com.team.project.entity.Reward;
 
 public class RewardDTO {
 

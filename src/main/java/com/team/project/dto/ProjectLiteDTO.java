@@ -1,7 +1,10 @@
-package com.team.project.entity;
+package com.team.project.dto;
 
 import java.util.Date;
 
+import com.team.project.entity.Category;
+import com.team.project.entity.Project;
+import com.team.project.entity.ProjectChange;
 import com.team.user.entity.Customer;
 
 public class ProjectLiteDTO {

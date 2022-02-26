@@ -1,9 +1,13 @@
-package com.team.project.entity;
+package com.team.project.dto;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.team.project.entity.Category;
+import com.team.project.entity.Project;
+import com.team.project.entity.ProjectChange;
+import com.team.project.entity.Reward;
 import com.team.user.entity.Customer;
 
 public class ProjectDTO {
@@ -18,6 +22,8 @@ public class ProjectDTO {
 	private String	shortTitle    ;   
 	private String	projectContent;   
 	private String	projectUrl    ;   
+	private long remainDayCnt;   
+	private int achiveRate;
 
 	private boolean loginedUserProjectInterest; 
 	
@@ -43,6 +49,9 @@ public class ProjectDTO {
 		this.projectChange= p.getProjectChange();
 		this.category= p.getCategory();
 		this.maker= p.getMaker ();
+
+		this.remainDayCnt = p.getRemainingDays();
+		this.achiveRate = p.getAchiveRate();
 		this.reward = new ArrayList<>();
 
 		for(Reward r :p.getReward()) {
@@ -69,6 +78,16 @@ public class ProjectDTO {
 
 	public int getProjectNo() {
 		return projectNo;
+	}
+
+
+	public long getRemainDayCnt() {
+		return remainDayCnt;
+	}
+
+
+	public int getAchiveRate() {
+		return achiveRate;
 	}
 
 
