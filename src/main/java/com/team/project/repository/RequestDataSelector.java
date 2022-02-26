@@ -9,6 +9,8 @@ public class RequestDataSelector {
 	private String sort;
 	private String rowCount;
 	private String loginedUserNo;
+	private int limit = 100;
+		
 
 	public int getCategory() {
 		return category;
@@ -24,6 +26,12 @@ public class RequestDataSelector {
 	}
 
 
+	public int getLimit() {
+		return limit;
+	}
+	public void setLimit(int limit) {
+		this.limit = limit;
+	}
 	public int getEditorPick() {
 		return editorPick;
 	}

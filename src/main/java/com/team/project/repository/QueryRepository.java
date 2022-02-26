@@ -46,6 +46,7 @@ public class QueryRepository {
 							,editorPick(rds.getEditorPick())
 							,achiveRate(rds.getAchiveRate()))
 					.orderBy(sort(rds.getSort()))
+					.limit(rds.getLimit())
 					.fetch();
 	}
 	
