@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.team.interest.repository.InterestRepository;
+import com.team.project.dto.ProjectDTO;
 import com.team.project.entity.Category;
 import com.team.project.entity.Project;
-import com.team.project.entity.ProjectDTO;
 import com.team.project.entity.Reward;
 import com.team.project.repository.CategoryRepository;
 import com.team.project.repository.ProjectRepository;
