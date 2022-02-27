@@ -1,5 +1,6 @@
 package com.team.user.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,10 @@ public class PaymentService {
 		Customer c = customerService.findByUserNo(userNo);
 		List<Card> list = paymentRepo.findByUser(c);
 		return list;
+	}
+	
+	public void addCard(Card card) {
+		paymentRepo.save(card);
 	}
 
 }

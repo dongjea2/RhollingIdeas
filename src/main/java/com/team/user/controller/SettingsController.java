@@ -47,7 +47,7 @@ public class SettingsController {
 		return returnMap;
 	}
 	
-	@PutMapping("account")
+	@PutMapping("/account")
 	public void updateAccount(@RequestBody Customer c) {
 		Customer customer = customerService.findByUserNo(c.getUserNo());
 		if(c.getUserImage() != null) {
@@ -102,6 +102,16 @@ public class SettingsController {
 			addrList.add(i, addrMap);
 		}
 		return addrList;
+	}
+	
+	@PostMapping("/addaddress")
+	public void addAddress(@RequestBody Address address) {
+		
+	}
+	
+	@PostMapping("/addpayment")
+	public void addPayment(@RequestBody Card card) {
+		paymentService.addCard(card);
 	}
 
 }
