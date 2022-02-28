@@ -3,6 +3,8 @@ package com.team.project.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +33,7 @@ public class ProjectService {
 	private InterestRepository interestRepository;
 	@Autowired
 	private QueryRepository queryRepository;
-
+	
 	Customer loginedUser;
 	
 	public ProjectService() {
@@ -40,14 +42,13 @@ public class ProjectService {
 		loginedUser.setUserNo(LOGINED_USER_NO);
 	}
 
-	public ProjectDTO findByProjectNo(int projectNo) {
-		//임시 유저 생성(세션완성되면 세션에서 받아올것)
+	public ProjectDTO findByProjectNo(int projectNo,Customer c) {
+
 		ProjectDTO dto = new ProjectDTO();
-		
 		Project p =projectRepository.findByProjectNo(projectNo);
 		
 		//check User interest(로그인 안되있으면 조회도 안되게 수정할것)
-		if(isLoginedUserThisProjectInterested(p)) {
+		if(isLoginedUserThisProjectInterested(p,c)) {
 			dto.setLoginedUserProjectInterest(true);
 		}
 		
@@ -55,14 +56,9 @@ public class ProjectService {
 		return dto;
 	}
 	
-	private boolean isLoginedUserThisProjectInterested(Project p) {
-		if (interestRepository.findByLikeProjectAndLikeUser(p,loginedUser) == null) {
-			return false;
-		}
-		return true;
-	}
 
-	public List<ProjectDTO> findByRDS(RequestDataSelector rds) {
+
+	public List<ProjectDTO> findByRDS(RequestDataSelector rds, Customer c ) {
 
 		List<ProjectDTO> dtoList = new ArrayList<ProjectDTO>();
 		List<Project> list =queryRepository.findByRequestData(rds);
@@ -72,7 +68,7 @@ public class ProjectService {
 			dto.entityToDTO(p);
 			dto.setReward(null);
 
-			if(isLoginedUserThisProjectInterested(p)) {
+			if(isLoginedUserThisProjectInterested(p,c)) {
 				dto.setLoginedUserProjectInterest(true);
 			}
 			dtoList.add(dto);
@@ -81,7 +77,14 @@ public class ProjectService {
 		return dtoList;
 	}
 	
-	
+	//로그인한 유저가 좋아한 프로젝트 찾기
+	private boolean isLoginedUserThisProjectInterested(Project p, Customer loginedUser) {
+		if (interestRepository.findByLikeProjectAndLikeUser(p,loginedUser) == null) {
+			return false;
+		}
+		return true;
+	}
+
 	public Reward findByRewardNo(int rewardNo) {
 		return rewardRepository.findByRewardNo(rewardNo);
 	}
