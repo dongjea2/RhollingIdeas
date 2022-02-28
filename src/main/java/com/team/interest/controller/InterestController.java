@@ -48,10 +48,10 @@ public class InterestController {
 	}
 	
 	@PostMapping("/interest")
-	public Object addInterest(@RequestBody Interest interest) {
+	public Object addInterest(@RequestBody Interest interest ,HttpSession s) {
 		Map<String, Object> returnMap = new HashMap<>();
 
-		if(service.addInterest(interest)) {
+		if(service.addInterest(interest,(Customer) s.getAttribute("loginInfo"))) {
 			returnMap.put("status", 1);
 			returnMap.put("msg", "좋아요 추가 성공");
 			return returnMap;
@@ -60,10 +60,10 @@ public class InterestController {
 	}
 	
 	@DeleteMapping("/interest")
-	public Object deleteInterest(@RequestBody Interest interest) {
+	public Object deleteInterest(@RequestBody Interest interest , HttpSession s) {
 		Map<String, Object> returnMap = new HashMap<>();
 		
-		if(service.deleteInterest(interest)) {
+		if(service.deleteInterest(interest, (Customer)s.getAttribute("loginInfo"))) {
 			returnMap.put("status", 1);
 			returnMap.put("msg", "좋아요 삭제 성공");
 			return returnMap;
