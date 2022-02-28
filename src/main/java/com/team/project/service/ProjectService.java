@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.team.interest.repository.InterestRepository;
+import com.team.project.dto.CreatedProjectDTO;
 import com.team.project.dto.ProjectDTO;
 import com.team.project.entity.Category;
 import com.team.project.entity.Project;
@@ -91,8 +92,16 @@ public class ProjectService {
 	 * @param c 프로젝트 만든 유저 객체
 	 * @return 프로젝트리스트
 	 */
-	public List<Project> createdProject(Customer c) {
-		return projectRepository.findByMaker(c);
+	public List<CreatedProjectDTO> createdProject(Customer c) {
+		List<CreatedProjectDTO> list = new ArrayList<>();
+		List<Project> pList = projectRepository.findByMaker(c);
+		for(Project p : pList) {
+			CreatedProjectDTO dto = new CreatedProjectDTO();
+			dto.entityToDTO(p);
+			list.add(dto);
+		}
+		return list;
+//		return projectRepository.findByMaker(c);
 	}
 	
 	public List<Category> findAllCategory() {
