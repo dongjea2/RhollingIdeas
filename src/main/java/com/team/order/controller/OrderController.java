@@ -47,8 +47,6 @@ public class OrderController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		Map<String, Object> returnMap = new HashMap<>();
-		System.out.println("카드번호"+order.getCard().getCardNum());
-		System.out.println("주소:"+order.getAddress().getAddressNo());
 
 		if( loginUser.getUserNo() != order.getOrderUser().getUserNo()) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
