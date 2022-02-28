@@ -2,6 +2,7 @@ package com.team.project.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,10 +14,12 @@ import com.team.project.dto.CreatedProjectDTO;
 import com.team.project.dto.ProjectDTO;
 import com.team.project.entity.Category;
 import com.team.project.entity.Project;
+import com.team.project.entity.Reject;
 import com.team.project.entity.Reward;
 import com.team.project.repository.CategoryRepository;
 import com.team.project.repository.ProjectRepository;
 import com.team.project.repository.QueryRepository;
+import com.team.project.repository.RejectRepository;
 import com.team.project.repository.RequestDataSelector;
 import com.team.project.repository.RewardRepository;
 import com.team.user.entity.Customer;
@@ -34,6 +37,8 @@ public class ProjectService {
 	private InterestRepository interestRepository;
 	@Autowired
 	private QueryRepository queryRepository;
+	@Autowired
+	private RejectRepository rejectRepository;
 	
 	Customer loginedUser;
 	
@@ -98,9 +103,15 @@ public class ProjectService {
 	public List<CreatedProjectDTO> createdProject(Customer c) {
 		List<CreatedProjectDTO> list = new ArrayList<>();
 		List<Project> pList = projectRepository.findByMaker(c);
+		
 		for(Project p : pList) {
 			CreatedProjectDTO dto = new CreatedProjectDTO();
 			dto.entityToDTO(p);
+			Optional<Reject> optR = rejectRepository.findById(p.getProjectNo());
+			if(optR.isPresent()) {
+				Reject r = optR.get();
+				dto.setRejectReason(r.getRejectReason());
+			}
 			list.add(dto);
 		}
 		return list;

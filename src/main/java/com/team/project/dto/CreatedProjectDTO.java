@@ -11,6 +11,8 @@ public class CreatedProjectDTO {
 	
 	private String projectStatus;
 	
+	private String rejectReason;
+	
 	public void entityToDTO(Project p) {
 		this.projectNo = p.getProjectNo();
 		this.userNo = p.getMaker().getUserNo();
@@ -19,7 +21,7 @@ public class CreatedProjectDTO {
 		this.shortTitle = p.getShortTitle();
 		this.projectStatus = p.getProjectChange().getProjectStatus();
 	}
-
+	
 	public int getProjectNo() {
 		return projectNo;
 	}
@@ -42,6 +44,14 @@ public class CreatedProjectDTO {
 
 	public String getProjectStatus() {
 		return projectStatus;
+	}
+
+	public String getRejectReason() {
+		return rejectReason;
+	}
+
+	public void setRejectReason(String rejectReason) {
+		this.rejectReason = rejectReason;
 	}
 	
 }
