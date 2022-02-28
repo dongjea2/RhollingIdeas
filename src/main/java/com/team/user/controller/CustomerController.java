@@ -3,6 +3,8 @@ package com.team.user.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +36,10 @@ public class CustomerController {
 				returnMap.put("msg", "탈퇴한 계정입니다");
 			} else {
 				returnMap.put("status", 1);
+				returnMap.put("loginedId", c2.getUserId());
+				returnMap.put("userNo", c2.getUserNo());
+				returnMap.put("userUrl", c2.getUserUrl());
+				returnMap.put("userName", c2.getUserName());
 			}
 		}
 		return returnMap;
