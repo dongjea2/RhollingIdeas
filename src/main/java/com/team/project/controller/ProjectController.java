@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.team.project.dto.CreatedProjectDTO;
@@ -43,31 +44,27 @@ public class ProjectController {
 		return reward;
 	}
 	
-	/*
-	 * @GetMapping("/rewardlist/{projectNo}") public Object
-	 * rewardlist(@PathVariable(name = "projectNo")int projectNo){
-	 * 
-	 * Project project = new Project(); project.setProjectNo(projectNo);
-	 * 
-	 * return service.findByProjectNo(project); }
-	 */
-	
+
 	//DTO사용 코드
 	@GetMapping("/project/{projectNo}")
-	public Object getProject(@PathVariable(name = "projectNo")int projectNo) {
-		return service.findByProjectNo(projectNo);
+	public Object getProject(@PathVariable(name = "projectNo")int projectNo, HttpSession s) {
+		return service.findByProjectNo(projectNo, (Customer)s.getAttribute("loginInfo"));
+	}
+
+	@GetMapping(value = {"/discover"})
+	public Object discover(HttpSession s){
+		RequestDataSelector rds = new RequestDataSelector();
+		rds.setEditorPick(1);
+		return service.findByRDS(rds, (Customer)s.getAttribute("loginInfo"));
 	}
 	
 	
-	
-	
-
 	@GetMapping("/mainpage")
-	public Object mainpage() {
+	public Object mainpage(HttpSession s) {
 		Map<String, Object> returnMap = new HashMap<>();
 		RequestDataSelector rds = new RequestDataSelector();
 		rds.setLimit(8);
-		returnMap.put("attention", service.findByRDS(rds));
+		returnMap.put("attention", service.findByRDS(rds, (Customer)s.getAttribute("loginInfo")));
 
 		return returnMap;
 	}
@@ -97,5 +94,5 @@ public class ProjectController {
 		return category;
 	}
 	
-	
+
 }
