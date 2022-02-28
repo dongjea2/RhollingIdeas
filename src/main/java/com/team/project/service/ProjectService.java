@@ -2,6 +2,7 @@ package com.team.project.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,13 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.team.interest.repository.InterestRepository;
+import com.team.project.dto.CreatedProjectDTO;
 import com.team.project.dto.ProjectDTO;
 import com.team.project.entity.Category;
 import com.team.project.entity.Project;
+import com.team.project.entity.Reject;
 import com.team.project.entity.Reward;
 import com.team.project.repository.CategoryRepository;
 import com.team.project.repository.ProjectRepository;
 import com.team.project.repository.QueryRepository;
+import com.team.project.repository.RejectRepository;
 import com.team.project.repository.RequestDataSelector;
 import com.team.project.repository.RewardRepository;
 import com.team.user.entity.Customer;
@@ -33,6 +37,8 @@ public class ProjectService {
 	private InterestRepository interestRepository;
 	@Autowired
 	private QueryRepository queryRepository;
+	@Autowired
+	private RejectRepository rejectRepository;
 	
 	Customer loginedUser;
 	
@@ -94,8 +100,22 @@ public class ProjectService {
 	 * @param c 프로젝트 만든 유저 객체
 	 * @return 프로젝트리스트
 	 */
-	public List<Project> createdProject(Customer c) {
-		return projectRepository.findByMaker(c);
+	public List<CreatedProjectDTO> createdProject(Customer c) {
+		List<CreatedProjectDTO> list = new ArrayList<>();
+		List<Project> pList = projectRepository.findByMaker(c);
+		
+		for(Project p : pList) {
+			CreatedProjectDTO dto = new CreatedProjectDTO();
+			dto.entityToDTO(p);
+			Optional<Reject> optR = rejectRepository.findById(p.getProjectNo());
+			if(optR.isPresent()) {
+				Reject r = optR.get();
+				dto.setRejectReason(r.getRejectReason());
+			}
+			list.add(dto);
+		}
+		return list;
+//		return projectRepository.findByMaker(c);
 	}
 	
 	public List<Category> findAllCategory() {

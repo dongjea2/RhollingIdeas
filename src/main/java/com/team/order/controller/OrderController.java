@@ -30,19 +30,13 @@ public class OrderController {
 	
 	@GetMapping("/orderlist")
 	public Object orderlist(HttpSession session) throws FindException {
-//		Customer c = (Customer)session.getAttribute("userId");
-		Customer c = new Customer();
-		c.setUserNo(1);
+		Customer c = (Customer)session.getAttribute("loginInfo");
 		
-		List<OrderDTO> list = new ArrayList<>();
-		
-		for(Order o : service.myOrderProjects(c.getUserNo())) {
-			OrderDTO dto = new OrderDTO();
-			dto.entityToDTO(o);
-			list.add(dto);
+		if(c != null) {
+			List<OrderDTO> list = service.myOrderProjects(c);	
+			return list;
 		}
-		
-		return list;
+		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	//TODO: 나중에 세션에서 유저NO읽어오기

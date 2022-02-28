@@ -5,12 +5,14 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.team.user.dto.FollowDTO;
 import com.team.user.entity.Customer;
 import com.team.user.entity.Follow;
 import com.team.user.service.FollowService;
@@ -22,32 +24,32 @@ public class FollowController {
 	private FollowService service;
 	
 	@GetMapping("/following")
-	public List<Follow> following(HttpSession session) {
-		//Customer c = (Customer)session.getAttribute("loginInfo");
-		Customer c = new Customer();
-		c.setUserNo(1);
+	public Object following(HttpSession session) {
+		Customer c = (Customer) session.getAttribute("loginInfo");
 		
-//		if(c != null) {
-//
-//		}
-		List<Follow> list = service.following(c);
-		return list;
+		if(c != null) {
+			return service.following(c);
+
+		}
+		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	@GetMapping("/followers")
-	public List<Follow> followers(HttpSession session) {
-		Customer c = new Customer();
-		c.setUserNo(1);
+	public Object followers(HttpSession session) {
+		Customer c = (Customer) session.getAttribute("loginInfo");
 		
-		List<Follow> list = service.followers(c);
-		return list;
+		if(c != null) {
+			return service.followers(c);
+		}
+		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+	/**
+	 * 팔로우 되어있는지 확인해서 삭제, 저장
+	 * @param f
+	 */
 	@PostMapping("/editfollow")
 	public void editfollow(@RequestBody Follow f) {
-		//로그인여부 확인
-		//이미 팔로우 되어있는지 확인
-		
 		if(service.checkFollow(f) == true) {
 			service.deleteFollow(f);
 		}else {
