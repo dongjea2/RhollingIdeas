@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.team.exception.FindException;
 import com.team.order.entity.Order;
+import com.team.order.entity.OrderDTO;
 import com.team.order.repository.OrderRepository;
 import com.team.user.entity.Customer;
 
@@ -43,12 +44,14 @@ public class OrderService {
 	 * @param userNo 유저번호
 	 * @return 주문한 목록들
 	 */
-	public List<Order> myOrderProjects(int userNo){
-		Customer c = new Customer();
-		c.setUserNo(userNo);
-		
-		List<Order> orders = new ArrayList<>();
-		orders = repository.findByOrderUser(c);
-		return orders;
+	public List<OrderDTO> myOrderProjects(Customer c){
+		List<OrderDTO> list = new ArrayList<>();
+		List<Order> orders = repository.findByOrderUser(c);
+		for(Order o : orders) {
+			OrderDTO dto = new OrderDTO();
+			dto.entityToDTO(o);
+			list.add(dto);
+		}
+		return list;
 	}
 }
