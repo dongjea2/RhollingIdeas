@@ -49,11 +49,14 @@ public class FollowController {
 	 * @param f
 	 */
 	@PostMapping("/editfollow")
-	public void editfollow(@RequestBody Follow f) {
-		if(service.checkFollow(f) == true) {
-			service.deleteFollow(f);
-		}else {
-			service.saveFollow(f);
+	public void editfollow(@RequestBody Follow f, HttpSession session) {
+		Customer c = (Customer) session.getAttribute("loginInfo");
+		if(c != null) {
+			if(service.checkFollow(f) == true) {
+				service.deleteFollow(f);
+			}else {
+				service.saveFollow(f);
+			}
 		}
 	}
 }
