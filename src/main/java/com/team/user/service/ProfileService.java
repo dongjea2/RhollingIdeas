@@ -1,6 +1,7 @@
 package com.team.user.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import com.team.project.repository.ProjectRepository;
 import com.team.user.dto.ProfileIntroDTO;
 import com.team.user.entity.Customer;
 import com.team.user.entity.Follow;
+import com.team.user.entity.FollowId;
 import com.team.user.repository.CustomerRepository;
 import com.team.user.repository.FollowRepository;
 
@@ -32,7 +34,7 @@ public class ProfileService {
 	 * @param userUrl
 	 * @return 유저정보
 	 */
-	public ProfileIntroDTO findByUserUrl(String userUrl) {
+	public ProfileIntroDTO findByUserUrl(String userUrl, Customer customer) {
 		Customer c = customerRepository.findByUserUrl(userUrl);
 		ProfileIntroDTO dto = new ProfileIntroDTO();
 		dto.entityToDTO(c);
@@ -46,6 +48,18 @@ public class ProfileService {
 		dto.setFollowerCnt(followerList.size());
 		dto.setFollowingCnt(followingList.size());
 		dto.setOrderProjectCnt(orderList.size());
+		
+		//내가 팔로우 하고 있는지 체크
+		FollowId id = new FollowId();
+		id.setUserNo(customer.getUserNo());
+		id.setFollow(c.getUserNo());
+		Optional<Follow> checkF = followRepository.findById(id);
+
+		if(checkF.isPresent()) {
+			dto.setFollowCheck(true);
+		}else {
+			dto.setFollowCheck(false);
+		}
 		
 		return dto;
 	}
