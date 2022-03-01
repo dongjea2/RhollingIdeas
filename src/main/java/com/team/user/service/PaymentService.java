@@ -28,5 +28,13 @@ public class PaymentService {
 	public void addCard(Card card) {
 		paymentRepo.save(card);
 	}
+	
+	public void modifyCard(Card card) {
+		paymentRepo.save(card);
+	}
+	
+	public void deleteCard(Card card) {
+		paymentRepo.deleteById(card.getCardNo());
+	}
 
 }

@@ -53,19 +53,6 @@ public class CustomerController {
 		session.removeAttribute("loginInfo");
 		session.invalidate();
 	}
-	@RequestMapping("/iddupchk")
-	public Object iddupchk(@RequestBody Customer c) {
-		Map<String, Object> returnMap = new HashMap<>();
-		Customer c2 = service.findByUserId(c.getUserId());
-		if(c2 != null) {
-			returnMap.put("status", 0);
-			returnMap.put("msg", "이미 존재하는 아이디입니다");
-		} else {
-			returnMap.put("status", 1);
-			returnMap.put("msg", "사용할 수 있는 아이디입니다");
-		}
-		return returnMap;
-	}
 	
 	@PostMapping("/signup")
 	public Object signup(@RequestBody Customer c) {

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.team.user.dto.AccountSetDTO;
 import com.team.user.entity.Address;
 import com.team.user.entity.Card;
 import com.team.user.entity.Customer;
@@ -48,26 +50,52 @@ public class SettingsController {
 	}
 	
 	@PutMapping("/account")
-	public void updateAccount(@RequestBody Customer c) {
+	public Object updateAccount(@RequestBody AccountSetDTO acc) {
+		Customer customer = customerService.findByUserNo(acc.getUserNo());
+		Map<String, Object> returnMap = new HashMap<>();
+		//빈문자열 또는 타입에러 프론트에서 처리
+		if(acc.getUserImage() != null) {
+			customer.setUserImage(acc.getUserImage());
+		}
+		if(acc.getUserName() != null) {
+			customer.setUserName(acc.getUserName());
+		}
+		if(acc.getUserIntroduction() != null) {
+			customer.setUserIntroduction(acc.getUserIntroduction());
+		}
+		if(acc.getUserId() != null) {
+			//id중복확인 - 중복시 {status: 0}으로 응답
+			if(customerService.findByUserId(acc.getUserId()) != null) {
+				returnMap.put("status", 0);
+				return returnMap;
+			} else {
+				customer.setUserId(acc.getUserId());
+			}	
+		}
+		if(acc.getUserPhone() != null) {
+			customer.setUserPhone(acc.getUserPhone());
+		}
+		if(acc.getUserPwd() != null) {
+			System.out.println(acc.getUserPwd());
+			System.out.println(customer.getUserPwd());
+			System.out.println(acc.getUpdatePwd());
+			if(acc.getUserPwd().equals(customer.getUserPwd())) {
+				customer.setUserPwd(acc.getUpdatePwd());
+			} else {
+				//기존 비밀번호 확인 - 불일치 {status: 0}으로 응답
+				returnMap.put("status", 0);
+				return returnMap;
+			}
+		}
+		customerService.profileSet(customer);
+		returnMap.put("status", 1);
+		return returnMap;
+	}
+	
+	@PutMapping("/withdrawal")
+	public void Withdrawal(@RequestBody Customer c) {
 		Customer customer = customerService.findByUserNo(c.getUserNo());
-		if(c.getUserImage() != null) {
-			customer.setUserImage(c.getUserImage());
-		}
-		if(c.getUserName() != null) {
-			customer.setUserName(c.getUserName());
-		}
-		if(c.getUserIntroduction() != null) {
-			customer.setUserIntroduction(c.getUserIntroduction());
-		}
-		if(c.getUserId() != null) {
-			customer.setUserId(c.getUserId());
-		}
-		if(c.getUserPhone() != null) {
-			customer.setUserPhone(c.getUserPhone());
-		}
-		if(c.getUserPwd() != null) {
-			customer.setUserPwd(c.getUserPwd());
-		}
+		customer.setUserStatus("0");
 		customerService.profileSet(customer);
 	}
 	
@@ -77,6 +105,7 @@ public class SettingsController {
 		List<Object> cardList = new ArrayList<>();
 		for(int i=0; i<list.size(); i++) {
 			Map<String, Object> cardMap = new HashMap<>();
+			cardMap.put("cardNo", list.get(i).getCardNo());
 			cardMap.put("cardNum", list.get(i).getCardNum());
 			cardMap.put("validDate", list.get(i).getCardValidDate());
 			cardMap.put("ownerBirth", list.get(i).getCardOwnerBirth());
@@ -112,6 +141,16 @@ public class SettingsController {
 	@PostMapping("/addpayment")
 	public void addPayment(@RequestBody Card card) {
 		paymentService.addCard(card);
+	}
+	
+	@PutMapping("/payment")
+	public void modifyPayment(@RequestBody Card card) {
+		paymentService.modifyCard(card);
+	}
+	
+	@DeleteMapping("/payment")
+	public void deletePayment(@RequestBody Card card) {
+		paymentService.deleteCard(card);
 	}
 
 }
