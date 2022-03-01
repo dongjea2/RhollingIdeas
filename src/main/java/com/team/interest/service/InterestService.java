@@ -32,22 +32,21 @@ public class InterestService {
 	
 
 	public boolean addInterest(Interest interest, Customer sessionCustomer) {
-		
-		System.out.println("로그인한 유저"+ sessionCustomer.getUserNo());
-		System.out.println("인터레스트 유저"+ interest.getLikeUser().getUserNo());
-
-		//1.check "I" or "A" [interst_aram(column)]
+		Project findedProject = null;
 		Optional<Project> p = projectRepository.findById(interest.getLikeProject().getProjectNo());
 		if(p.isPresent()) {
-			Project findedProject= p.get();
+			 findedProject= p.get();
+		}else {
+			return false;
+		}
 
-			//a. Funding Started
-			if(findedProject.isProjectFundingStarted()){
-				interest.setInterestAlarm("I");
-			//b. Funding Not Started
-			} else {
-				interest.setInterestAlarm("A");
-			}
+		//1.check "I" or "A" [interst_aram(column)]
+		//a. Funding Started
+		if(findedProject.isProjectFundingStarted()){
+			interest.setInterestAlarm("I");
+		//b. Funding Not Started
+		} else {
+			interest.setInterestAlarm("A");
 		}
 
 		//프론트 로그인 유저와 백엔드 로그인 유저 검증
@@ -60,7 +59,6 @@ public class InterestService {
 	
 	public boolean deleteInterest(Interest interest, Customer sessionCustomer) {
 		//프론트 로그인 유저와 백엔드 로그인 유저 검증
-		System.out.println("로그인한 유저"+ sessionCustomer.getUserNo());
 		if( sessionCustomer.getUserNo() == interest.getLikeUser().getUserNo()) {
 			repository.delete(interest);
 			return true;
