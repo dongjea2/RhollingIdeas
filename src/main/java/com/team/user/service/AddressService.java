@@ -23,4 +23,16 @@ public class AddressService {
 		List<Address> list = addrRepo.findByUser(c);
 		return list;
 	}
+	
+	public void addAddress(Address address) {
+		addrRepo.save(address);
+	}
+	
+	public void modifyAddress(Address address) {
+		addrRepo.save(address);
+	}
+	
+	public void deleteAddress(Address address) {
+		addrRepo.deleteById(address.getAddressNo());
+	}
 }

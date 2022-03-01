@@ -135,7 +135,7 @@ public class SettingsController {
 	
 	@PostMapping("/addaddress")
 	public void addAddress(@RequestBody Address address) {
-		
+		addrService.addAddress(address);
 	}
 	
 	@PostMapping("/addpayment")
@@ -148,9 +148,19 @@ public class SettingsController {
 		paymentService.modifyCard(card);
 	}
 	
+	@PutMapping("/address")
+	public void modifyAddress(@RequestBody Address address) {
+		addrService.modifyAddress(address);
+	}
+	
 	@DeleteMapping("/payment")
 	public void deletePayment(@RequestBody Card card) {
 		paymentService.deleteCard(card);
+	}
+	
+	@DeleteMapping("/address")
+	public void deleteAddress(@RequestBody Address address) {
+		addrService.deleteAddress(address);
 	}
 
 }
