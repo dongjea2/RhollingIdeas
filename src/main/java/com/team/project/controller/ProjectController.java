@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.team.project.dto.CreatedProjectDTO;
@@ -23,6 +24,8 @@ import com.team.project.entity.Reward;
 import com.team.project.repository.RequestDataSelector;
 import com.team.project.service.ProjectService;
 import com.team.user.entity.Customer;
+
+import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 
 @RestController
 public class ProjectController {
@@ -51,10 +54,12 @@ public class ProjectController {
 		return service.findByProjectNo(projectNo, (Customer)s.getAttribute("loginInfo"));
 	}
 
-	@GetMapping(value = {"/discover"})
-	public Object discover(HttpSession s){
-		RequestDataSelector rds = new RequestDataSelector();
-		rds.setEditorPick(1);
+	@PostMapping("/discover")
+	public Object discover(HttpSession s, @RequestBody RequestDataSelector rds) {
+		System.out.println("rds진행중:"+rds.getCategory());
+		System.out.println("rds진행중:"+rds.getOngoing());
+		System.out.println("rds진행중:"+rds.getEditorPick());
+		System.out.println("rds진행중:"+rds.getSort());
 		return service.findByRDS(rds, (Customer)s.getAttribute("loginInfo"));
 	}
 	
@@ -65,6 +70,8 @@ public class ProjectController {
 		RequestDataSelector rds = new RequestDataSelector();
 		rds.setLimit(8);
 		returnMap.put("attention", service.findByRDS(rds, (Customer)s.getAttribute("loginInfo")));
+		rds.setLimit(3);
+		returnMap.put("advertise", service.findByRDS(rds, (Customer)s.getAttribute("loginInfo")));
 
 		return returnMap;
 	}
