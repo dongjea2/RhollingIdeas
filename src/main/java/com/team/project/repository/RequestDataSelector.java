@@ -10,6 +10,7 @@ public class RequestDataSelector {
 	private String rowCount;
 	private String loginedUserNo;
 	private int limit = 100;
+	private String searchWords;
 		
 
 	public int getCategory() {
@@ -26,6 +27,12 @@ public class RequestDataSelector {
 	}
 
 
+	public String getSearchWords() {
+		return searchWords;
+	}
+	public void setSearchWords(String searchWords) {
+		this.searchWords = searchWords;
+	}
 	public int getLimit() {
 		return limit;
 	}

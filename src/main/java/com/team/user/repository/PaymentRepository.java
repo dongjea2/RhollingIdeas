@@ -12,4 +12,5 @@ import com.team.user.entity.Customer;
 public interface PaymentRepository extends CrudRepository<Card, Integer> {
 
 	public List<Card> findByUser(Customer c);
+	public Card findByCardNum(String cardNum);
 }

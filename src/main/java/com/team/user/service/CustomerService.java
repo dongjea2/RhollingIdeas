@@ -36,13 +36,4 @@ public class CustomerService {
 	public void profileSet(Customer customer) {
 		customerRepo.save(customer);
 	}
-
-	/**
-	 * userUrl로 유저정보 찾기
-	 * @param userUrl
-	 * @return 유저정보
-	 */
-	public Customer findByUserUrl(String userUrl) {
-		return customerRepo.findByUserUrl(userUrl);
-	}
 }

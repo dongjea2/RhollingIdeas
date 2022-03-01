@@ -23,8 +23,9 @@ public class CustomerController {
 	@Autowired
 	private CustomerService service;
 	
-	@PostMapping("/login")
-	public Object login(@RequestBody Customer c) {
+	@RequestMapping("/login")
+	public Object login(@RequestBody Customer c, HttpSession session) {
+		session.removeAttribute("loginInfo");
 		Map<String, Object> returnMap = new HashMap<>();
 		Customer c2 = service.login(c.getUserId(), c.getUserPwd());
 		if(c2==null) {
@@ -35,6 +36,9 @@ public class CustomerController {
 				returnMap.put("status", 2);
 				returnMap.put("msg", "탈퇴한 계정입니다");
 			} else {
+				//백 세션
+				session.setAttribute("loginInfo", c2);
+				//프론트 세션
 				returnMap.put("status", 1);
 				returnMap.put("loginedId", c2.getUserId());
 				returnMap.put("userNo", c2.getUserNo());
@@ -43,6 +47,11 @@ public class CustomerController {
 			}
 		}
 		return returnMap;
+	}
+	@RequestMapping("/logout")
+	public void logout(HttpSession session) {
+		session.removeAttribute("loginInfo");
+		session.invalidate();
 	}
 	@RequestMapping("/iddupchk")
 	public Object iddupchk(@RequestBody Customer c) {
@@ -71,12 +80,5 @@ public class CustomerController {
 			returnMap.put("msg", "가입실패");
 		}
 		return returnMap;
-	}
-	
-
-	@GetMapping("/profile/{userUrl}")
-	public Customer profile(@PathVariable String userUrl) {
-		Customer c = service.findByUserUrl(userUrl);
-		return c;
 	}
 }

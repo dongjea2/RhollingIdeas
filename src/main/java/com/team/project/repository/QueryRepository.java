@@ -38,7 +38,10 @@ public class QueryRepository {
 	public List<Project> findByRequestData(RequestDataSelector rds){
 		JPAQueryFactory query = new JPAQueryFactory(em);
 		
-		return query
+
+		//1. RDS에 맞춰서 프로젝트 리턴
+		if(rds.getSearchWords() == null) {
+			return query
 					.select(project)
 					.from(project)
 					.where( eqCategory(rds.getCategory())
@@ -48,6 +51,21 @@ public class QueryRepository {
 					.orderBy(sort(rds.getSort()))
 					.limit(rds.getLimit())
 					.fetch();
+		}
+		
+		
+		//2.검색 기능(SearchWords에 값이 들어 있을시 )
+			return query
+					.select(project)
+					.from(project)
+					.where( eqCategory(rds.getCategory())
+							,project.longTitle.contains(rds.getSearchWords()))
+					.orderBy(sort(rds.getSort()))
+					.limit(rds.getLimit())
+					.fetch();
+	
+			
+		
 	}
 	
 
@@ -65,21 +83,26 @@ public class QueryRepository {
 
 	//2.
 	private BooleanExpression onGoing (String onGoing) {
-		if(onGoing =="onGoing") {
+		if(onGoing == null) {
+			log.info("[RDS]Not Select editorPick");
+			return null;
+		}
+
+		if(onGoing .equals("onGoing")) {
 			log.info("[RDS]onGoing");
 			return projectChange.projectStatus.eq("승인")
 					.and(project.startDate.before(new Date())
 					.and(project.endDate.after(new Date())));
 		}
 		
-		if(onGoing =="confirm") {
+		if(onGoing .equals("confirm")) {
 			log.info("[RDS]confirm");
 			return projectChange.projectStatus.eq("승인")
 					.and(project.endDate.before(new Date()))
 					.and(projectChange.sumPrice.gt(project.targetPrice));
 		}
 		
-		if(onGoing =="preLaunch") {
+		if(onGoing.equals("preLaunch")){
 			log.info("[RDS]preLaunch");
 			return projectChange.projectStatus.eq("승인")
 					.and(project.startDate.after(new Date()));
@@ -103,7 +126,7 @@ public class QueryRepository {
 	private BooleanExpression achiveRate(int achiveRate) {
 		final int RATE_LESS_THAN_75 =1;
 		final int RATE_BETWEEN_75_AND_100=2;
-		final int RATE_MORE_THAN_100 =1;
+		final int RATE_MORE_THAN_100 =3;
 
 		if( achiveRate == RATE_LESS_THAN_75) {
 			log.info("[RDS]RATE_LESS_THAN_75");
@@ -131,38 +154,42 @@ public class QueryRepository {
 	 * @return
 	 */
 	private OrderSpecifier<?> sort(String sort) {
+		if(sort ==null) {
+			log.info("[RDS]Not Select Sort");
+			return project.projectNo.asc();
+		}
 	
-		if(sort == "likeCnt") {
+		if(sort.equals("likeCnt")) {
 			log.info("[RDS]likeCnt");
 			return projectChange.projectLikeCnt.desc();
 		}
 		
-		if(sort=="supportCnt"){
+		if(sort.equals("supportCnt")){
 			log.info("[RDS]supportCnt");
 			return projectChange.supportCnt.desc();
 			
 		}
 		
-		if(sort=="sumPrice"){
+		if(sort.equals("sumPrice")){
 			log.info("[RDS]sumPrice");
 			return projectChange.sumPrice.desc();
 			
 		}
 		
-		if(sort=="newRelease") {
+		if(sort.equals("newRelease")) {
 			log.info("[RDS]newRelease");
 			return project.startDate.desc();
 			
 		}
 			
-		if(sort=="endCome") {
+		if(sort.equals("endCome")) {
 			log.info("[RDS]endCome");
 			return project.endDate.desc();
 			
 		}
 		
-			
 		log.info("[RDS]Not Select Sort");
 		return project.projectNo.asc();
+			
 	}
 }

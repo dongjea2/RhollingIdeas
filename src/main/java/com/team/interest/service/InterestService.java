@@ -31,28 +31,25 @@ public class InterestService {
 	}
 	
 
-	public boolean addInterest(Interest interest) {
-		//백엔드 쪽 로그인된 유저
-		Customer sessionCustomer = new Customer();
-		sessionCustomer.setUserNo(1);
-		
-
-		//1.check "I" or "A" [interst_aram(column)]
+	public boolean addInterest(Interest interest, Customer sessionCustomer) {
+		Project findedProject = null;
 		Optional<Project> p = projectRepository.findById(interest.getLikeProject().getProjectNo());
 		if(p.isPresent()) {
-			Project findedProject= p.get();
-
-			//a. Funding Started
-			if(findedProject.isProjectFundingStarted()){
-				interest.setInterestAlarm("I");
-			//b. Funding Not Started
-			} else {
-				interest.setInterestAlarm("A");
-			}
+			 findedProject= p.get();
+		}else {
+			return false;
 		}
 
+		//1.check "I" or "A" [interst_aram(column)]
+		//a. Funding Started
+		if(findedProject.isProjectFundingStarted()){
+			interest.setInterestAlarm("I");
+		//b. Funding Not Started
+		} else {
+			interest.setInterestAlarm("A");
+		}
 
-				//프론트 로그인 유저와 백엔드 로그인 유저 검증
+		//프론트 로그인 유저와 백엔드 로그인 유저 검증
 		if( sessionCustomer.getUserNo() == interest.getLikeUser().getUserNo()) {
 			repository.save(interest);
 			return true;
@@ -60,11 +57,7 @@ public class InterestService {
 		return false;
 	}
 	
-	public boolean deleteInterest(Interest interest) {
-		//백엔드 쪽 로그인된 유저
-		Customer sessionCustomer = new Customer();
-		sessionCustomer.setUserNo(1);
-		
+	public boolean deleteInterest(Interest interest, Customer sessionCustomer) {
 		//프론트 로그인 유저와 백엔드 로그인 유저 검증
 		if( sessionCustomer.getUserNo() == interest.getLikeUser().getUserNo()) {
 			repository.delete(interest);

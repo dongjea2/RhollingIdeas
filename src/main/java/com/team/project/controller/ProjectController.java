@@ -5,13 +5,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+<<<<<<< HEAD
+=======
+import org.springframework.web.bind.annotation.RequestParam;
+>>>>>>> bca8ce5c5f41529d457ed17cca12a65e7eb81016
 import org.springframework.web.bind.annotation.RestController;
 
+import com.team.project.dto.CreatedProjectDTO;
 import com.team.project.dto.ProjectDTO;
 import com.team.project.entity.Category;
 import com.team.project.entity.Project;
@@ -19,6 +28,8 @@ import com.team.project.entity.Reward;
 import com.team.project.repository.RequestDataSelector;
 import com.team.project.service.ProjectService;
 import com.team.user.entity.Customer;
+
+import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 
 @RestController
 public class ProjectController {
@@ -40,31 +51,27 @@ public class ProjectController {
 		return reward;
 	}
 	
-	/*
-	 * @GetMapping("/rewardlist/{projectNo}") public Object
-	 * rewardlist(@PathVariable(name = "projectNo")int projectNo){
-	 * 
-	 * Project project = new Project(); project.setProjectNo(projectNo);
-	 * 
-	 * return service.findByProjectNo(project); }
-	 */
-	
+
 	//DTO사용 코드
 	@GetMapping("/project/{projectNo}")
-	public Object getProject(@PathVariable(name = "projectNo")int projectNo) {
-		return service.findByProjectNo(projectNo);
+	public Object getProject(@PathVariable(name = "projectNo")int projectNo, HttpSession s) {
+		return service.findByProjectNo(projectNo, (Customer)s.getAttribute("loginInfo"));
+	}
+
+	@PostMapping("/discover")
+	public Object discover(HttpSession s, @RequestBody RequestDataSelector rds) {
+		return service.findByRDS(rds, (Customer)s.getAttribute("loginInfo"));
 	}
 	
 	
-	
-	
-
 	@GetMapping("/mainpage")
-	public Object mainpage() {
+	public Object mainpage(HttpSession s) {
 		Map<String, Object> returnMap = new HashMap<>();
 		RequestDataSelector rds = new RequestDataSelector();
 		rds.setLimit(8);
-		returnMap.put("attention", service.findByRDS(rds));
+		returnMap.put("attention", service.findByRDS(rds, (Customer)s.getAttribute("loginInfo")));
+		rds.setLimit(3);
+		returnMap.put("advertise", service.findByRDS(rds, (Customer)s.getAttribute("loginInfo")));
 
 		return returnMap;
 	}
@@ -80,18 +87,16 @@ public class ProjectController {
 
 	
 	@GetMapping("/created")
-	public List<Project> createdprojects() {
-		//Customer c = (Customer)session.getAttribute("loginInfo");
-		Customer c = new Customer();
-		c.setUserNo(1);
+	public Object createdprojects(HttpSession session) {
+		Customer c = (Customer)session.getAttribute("loginInfo");
+//		Customer c = new Customer();
+//		c.setUserNo(1);
 		
-//		if(c != null) {
-//
-//		}
-				
-		List<Project> list = service.createdProject(c);
-		
-		return list;
+		if(c != null) {
+			List<CreatedProjectDTO> list = service.createdProject(c);
+			return list;
+		}
+		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	@GetMapping("/category")
@@ -100,5 +105,5 @@ public class ProjectController {
 		return category;
 	}
 	
-	
+
 }

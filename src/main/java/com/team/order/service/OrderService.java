@@ -9,20 +9,34 @@ import org.springframework.stereotype.Service;
 
 import com.team.exception.FindException;
 import com.team.order.entity.Order;
+import com.team.order.entity.OrderDTO;
 import com.team.order.repository.OrderRepository;
+import com.team.user.entity.Card;
 import com.team.user.entity.Customer;
+import com.team.user.repository.AddressRepository;
+import com.team.user.repository.PaymentRepository;
 
 @Service
 public class OrderService {
 	@Autowired
 	private OrderRepository repository;
-	
+	@Autowired
+	private PaymentRepository paymentRepository; 
+	@Autowired
+	private AddressRepository addressRepository;
 	/**
 	 * 주문정보를 추가한다
 	 * @param order 주문객체
 	 * @throws FindException
 	 */
 	public void add(Order order) throws FindException {
+		//1.카드 번호 검증(주문자 자신의 카드가 맞는지)
+		Card c = paymentRepository.findByCardNum(order.getCard().getCardNum());
+		if(c.getUser().getUserNo() != order.getOrderUser().getUserNo()) {
+			throw new FindException();
+		}
+		order.setCard(c);
+		
 		repository.save(order);
 	}
 	
@@ -43,12 +57,14 @@ public class OrderService {
 	 * @param userNo 유저번호
 	 * @return 주문한 목록들
 	 */
-	public List<Order> myOrderProjects(int userNo){
-		Customer c = new Customer();
-		c.setUserNo(userNo);
-		
-		List<Order> orders = new ArrayList<>();
-		orders = repository.findByOrderUser(c);
-		return orders;
+	public List<OrderDTO> myOrderProjects(Customer c){
+		List<OrderDTO> list = new ArrayList<>();
+		List<Order> orders = repository.findByOrderUser(c);
+		for(Order o : orders) {
+			OrderDTO dto = new OrderDTO();
+			dto.entityToDTO(o);
+			list.add(dto);
+		}
+		return list;
 	}
 }

@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +21,8 @@ import com.team.order.entity.OrderDTO;
 import com.team.order.service.OrderService;
 import com.team.user.entity.Customer;
 
+import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
+
 @RestController
 public class OrderController {
 	@Autowired
@@ -26,45 +30,37 @@ public class OrderController {
 	
 	@GetMapping("/orderlist")
 	public Object orderlist(HttpSession session) throws FindException {
-//		Customer c = (Customer)session.getAttribute("userId");
-		Customer c = new Customer();
-		c.setUserNo(1);
+		Customer c = (Customer)session.getAttribute("loginInfo");
 		
-		List<OrderDTO> list = new ArrayList<>();
-		
-		for(Order o : service.myOrderProjects(c.getUserNo())) {
-			OrderDTO dto = new OrderDTO();
-			dto.entityToDTO(o);
-			list.add(dto);
+		if(c != null) {
+			List<OrderDTO> list = service.myOrderProjects(c);	
+			return list;
 		}
-		
-		return list;
+		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	//TODO: 나중에 세션에서 유저NO읽어오기
 	@PostMapping("/order")
-	public Object orderReward(@RequestBody Order order) {
+	public Object orderReward(@RequestBody Order order, HttpSession s) {
+		Customer loginUser =(Customer)s.getAttribute("loginInfo");
+		if(loginUser == null) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 		Map<String, Object> returnMap = new HashMap<>();
-		final int LOGINED_USERNO = 1;
-		
-		order.setOrderResult("진행중");
 
-		if( LOGINED_USERNO != order.getOrderUser().getUserNo()) {
-			returnMap.put("status", 0);
-			returnMap.put("msg", "구매 실패, 다시 로그인 해주세요");
-			return returnMap;
+		if( loginUser.getUserNo() != order.getOrderUser().getUserNo()) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		} 
 		
 		try {
+			order.setOrderResult("진행중");
 			service.add(order);
-			returnMap.put("status", 1);
-			returnMap.put("msg", "구매 성공");
-
 		} catch (FindException e) {
-			returnMap.put("status", 0);
-			returnMap.put("msg", "구매 실패, 잘못된 상품 정보");
-		}
-			return returnMap;
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}	
+		returnMap.put("status", 1);
+		returnMap.put("msg", "구매 성공");
+		return returnMap;
 	}
 	
 }

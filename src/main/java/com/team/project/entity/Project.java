@@ -17,6 +17,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.DynamicInsert;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.team.user.entity.Customer;
 
@@ -24,6 +26,7 @@ import com.team.user.entity.Customer;
 
 @Entity
 @Table(name = "project")
+@DynamicInsert
 public class Project {
 	@Id //시퀀스 설정해줘야함
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
