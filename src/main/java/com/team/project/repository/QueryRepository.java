@@ -38,7 +38,10 @@ public class QueryRepository {
 	public List<Project> findByRequestData(RequestDataSelector rds){
 		JPAQueryFactory query = new JPAQueryFactory(em);
 		
-		return query
+
+		//1. RDS에 맞춰서 프로젝트 리턴
+		if(rds.getSearchWords() == null) {
+			return query
 					.select(project)
 					.from(project)
 					.where( eqCategory(rds.getCategory())
@@ -48,6 +51,21 @@ public class QueryRepository {
 					.orderBy(sort(rds.getSort()))
 					.limit(rds.getLimit())
 					.fetch();
+		}
+		
+		
+		//2.검색 기능(SearchWords에 값이 들어 있을시 )
+			return query
+					.select(project)
+					.from(project)
+					.where( eqCategory(rds.getCategory())
+							,project.longTitle.contains(rds.getSearchWords()))
+					.orderBy(sort(rds.getSort()))
+					.limit(rds.getLimit())
+					.fetch();
+	
+			
+		
 	}
 	
 

@@ -56,10 +56,6 @@ public class ProjectController {
 
 	@PostMapping("/discover")
 	public Object discover(HttpSession s, @RequestBody RequestDataSelector rds) {
-		System.out.println("rds진행중:"+rds.getCategory());
-		System.out.println("rds진행중:"+rds.getOngoing());
-		System.out.println("rds진행중:"+rds.getEditorPick());
-		System.out.println("rds진행중:"+rds.getSort());
 		return service.findByRDS(rds, (Customer)s.getAttribute("loginInfo"));
 	}
 	
