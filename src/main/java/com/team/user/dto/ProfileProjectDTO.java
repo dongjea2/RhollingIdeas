@@ -1,9 +1,10 @@
 package com.team.user.dto;
 
 import com.team.order.entity.Order;
+import com.team.project.entity.Project;
 
-public class ProfileOrderDTO {
-	private int orderNo;
+public class ProfileProjectDTO {
+	private Integer orderNo;
 	private int projectNo;
 	private String projectImage;
 	private String longTitle;
@@ -20,7 +21,7 @@ public class ProfileOrderDTO {
 	
 	private boolean checkLike;
 	
-	public void entityToDTO(Order o) {
+	public void orderEntityToDTO(Order o) {
 		this.orderNo = o.getOrderNo();
 		this.projectNo = o.getProject().getProjectNo();
 		this.projectImage = o.getProject().getProjectImage();
@@ -33,6 +34,16 @@ public class ProfileOrderDTO {
 		this.projectStatus = o.getProject().getProjectChange().getProjectStatus();
 	}
 	
+	public void projectEntityToDTO(Project p) {
+		this.projectNo = p.getProjectNo();
+		this.projectImage = p.getProjectImage();
+		this.longTitle = p.getLongTitle();
+		this.projectBrief = p.getProjectBrief();
+		this.achiveRate = p.getAchiveRate();
+		this.categoryName = p.getCategory().getCategoryName();
+		this.makerName = p.getMaker().getUserName();
+		this.sumPrice = p.getProjectChange().getSumPrice();
+	}
 
 	public boolean isCheckLike() {
 		return checkLike;
@@ -43,7 +54,7 @@ public class ProfileOrderDTO {
 		this.checkLike = checkLike;
 	}
 	
-	public int getOrderNo() {
+	public Integer getOrderNo() {
 		return orderNo;
 	}
 

@@ -19,6 +19,7 @@ import com.team.project.entity.Project;
 import com.team.project.entity.QCategory;
 import com.team.project.entity.QProject;
 import com.team.project.entity.QProjectChange;
+import com.team.user.entity.Customer;
 import com.team.user.entity.QCustomer;
 
 
@@ -35,6 +36,16 @@ public class QueryRepository {
 	private QProjectChange projectChange= QProjectChange.projectChange;
 	private QCustomer customer = QCustomer.customer;
 	private QInterest interest = QInterest.interest;
+	
+	public List<Project> findByMakerAndApprovalStatus(Customer c){
+		JPAQueryFactory query = new JPAQueryFactory(em);
+		return query
+				.select(project)
+				.from(project)
+				.where(project.maker.userNo.eq(c.getUserNo())
+						,project.projectChange.projectStatus.eq("승인"))
+				.fetch();
+	}
 	
 	public List<Project> findByRequestData(RequestDataSelector rds){
 		JPAQueryFactory query = new JPAQueryFactory(em);

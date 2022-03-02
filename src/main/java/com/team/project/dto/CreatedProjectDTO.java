@@ -7,7 +7,7 @@ public class CreatedProjectDTO {
 	private int userNo;
 	private String projectImage;
 	private String longTitle;
-	private String shortTitle;
+	private String projectBrief;
 	
 	private String projectStatus;
 	
@@ -18,7 +18,7 @@ public class CreatedProjectDTO {
 		this.userNo = p.getMaker().getUserNo();
 		this.projectImage = p.getProjectImage();
 		this.longTitle = p.getLongTitle();
-		this.shortTitle = p.getShortTitle();
+		this.projectBrief = p.getProjectBrief();
 		this.projectStatus = p.getProjectChange().getProjectStatus();
 	}
 	
@@ -38,8 +38,8 @@ public class CreatedProjectDTO {
 		return longTitle;
 	}
 
-	public String getShortTitle() {
-		return shortTitle;
+	public String getProjectBrief() {
+		return projectBrief;
 	}
 
 	public String getProjectStatus() {
