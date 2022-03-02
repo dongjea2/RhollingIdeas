@@ -13,4 +13,5 @@ public interface InterestRepository extends CrudRepository<Interest, InterestId>
 
 	public List<Interest> findByLikeUserAndInterestAlarm(Customer c, String iOrA);
 	public Interest findByLikeProjectAndLikeUser(Project p , Customer c);
+	public List<Interest> findByLikeUser(Customer c);
 }

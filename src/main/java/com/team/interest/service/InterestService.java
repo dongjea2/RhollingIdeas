@@ -1,12 +1,16 @@
 package com.team.interest.service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.team.interest.dto.InterestDTO;
 import com.team.interest.entity.Interest;
 import com.team.interest.repository.InterestRepository;
 import com.team.project.entity.Project;
@@ -22,12 +26,50 @@ public class InterestService {
 	@Autowired
 	private ProjectRepository projectRepository;
 	
-	public List<Interest> myInterestProjects(Customer c) {
-		return repository.findByLikeUserAndInterestAlarm(c, "I");
+	/**
+	 * 관심프로젝트페이지의 좋아한 프로젝트 리스트 출력
+	 * @param c 로그인한 유저 객체
+	 * @return 유저의 I 프로젝트 리스트
+	 */
+	public Object myInterestProjects(Customer c) {
+		Map<String, Object> returnMap = new HashMap<>();
+		List<InterestDTO> list = new ArrayList<>();
+		List<Interest> iList = repository.findByLikeUserAndInterestAlarm(c, "I");
+		
+		for(Interest i : iList) {
+			InterestDTO dto = new InterestDTO();
+			dto.entityToDTO(i);
+			list.add(dto);
+		}
+		List<Interest> aList = repository.findByLikeUserAndInterestAlarm(c, "A");
+		
+		returnMap.put("iProject", list);
+		returnMap.put("aProjectCnt", aList.size());
+		
+		return returnMap;
 	}
 	
-	public List<Interest> myAlarmProjects(Customer c) {
-		return repository.findByLikeUserAndInterestAlarm(c, "A");
+	/**
+	 * 관심프로젝트페이지의 알림신청 프로젝트 리스트 출력
+	 * @param c 로그인한 유저 객체
+	 * @return 유저의 A 프로젝트 리스트
+	 */
+	public Object myAlarmProjects(Customer c) {
+		Map<String, Object> returnMap = new HashMap<>();
+		List<InterestDTO> list = new ArrayList<>();
+		List<Interest> aList = repository.findByLikeUserAndInterestAlarm(c, "A");
+		
+		for(Interest a : aList) {
+			InterestDTO dto = new InterestDTO();
+			dto.entityToDTO(a);
+			list.add(dto);
+		}
+		List<Interest> iList = repository.findByLikeUserAndInterestAlarm(c, "I");
+		
+		returnMap.put("aProject", list);
+		returnMap.put("iProjectCnt", iList.size());
+		
+		return returnMap;
 	}
 	
 

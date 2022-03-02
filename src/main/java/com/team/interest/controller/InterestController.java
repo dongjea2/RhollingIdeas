@@ -28,23 +28,23 @@ public class InterestController {
 	private InterestService service;
 	
 	@GetMapping("/interestlist")
-	public List<Interest> interestlist(HttpSession session) {
-//		Customer c = (Customer)session.getAttribute("userId");
-		Customer c = new Customer();
-		c.setUserNo(1);
+	public Object interestlist(HttpSession session) {
+		Customer c = (Customer)session.getAttribute("loginInfo");
 		
-		List<Interest> list = service.myInterestProjects(c);
-		return list;
+		if(c != null) {
+			return service.myInterestProjects(c);
+		}
+		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	@GetMapping("/prelaunchedlist")
-	public List<Interest> prelaunchedlist(HttpSession session) {
-//		Customer c = (Customer)session.getAttribute("userId");
-		Customer c = new Customer();
-		c.setUserNo(1);
+	public Object prelaunchedlist(HttpSession session) {
+		Customer c = (Customer)session.getAttribute("loginInfo");
 		
-		List<Interest> list = service.myAlarmProjects(c);
-		return list;
+		if(c != null) {
+			return service.myAlarmProjects(c);
+		}
+		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	@PostMapping("/interest")
