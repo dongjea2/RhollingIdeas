@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.team.project.entity.Project;
 import com.team.project.repository.ProjectRepository;
+import com.team.project.repository.QueryRepository;
 import com.team.user.dto.FollowDTO;
 import com.team.user.entity.Customer;
 import com.team.user.entity.Follow;
@@ -23,6 +24,8 @@ public class FollowService {
 	private FollowRepository repository;
 	@Autowired
 	private ProjectRepository projectRepository;
+	@Autowired
+	private QueryRepository queryRepository;
 	
 	/**
 	 * 내가 팔로우하고 있는 사람들을 조회한다
@@ -46,14 +49,8 @@ public class FollowService {
 			dto.setFollowerCnt(fCnt.size());
 			
 			//올린프로젝트 카운트
-			List<Project> pList = projectRepository.findByMaker(c1);
-			List<Project> pCnt = new ArrayList<>();
-			for(Project p : pList) {
-				if(p.getProjectChange().getProjectStatus().equals("승인")) {
-					pCnt.add(p);
-				}
-			}
-			dto.setCreatedCnt(pCnt.size());
+			List<Project> pList = queryRepository.findByMakerAndApprovalStatus(c1);
+			dto.setCreatedCnt(pList.size());
 			
 			list.add(dto);
 		}
@@ -97,14 +94,8 @@ public class FollowService {
 			dto.setFollowerCnt(fCnt.size());
 			
 			//올린프로젝트 카운트
-			List<Project> pList = projectRepository.findByMaker(c1);
-			List<Project> pCnt = new ArrayList<>();
-			for(Project p : pList) {
-				if(p.getProjectChange().getProjectStatus().equals("승인")) {
-					pCnt.add(p);
-				}
-			}
-			dto.setCreatedCnt(pCnt.size());
+			List<Project> pList = queryRepository.findByMakerAndApprovalStatus(c1);
+			dto.setCreatedCnt(pList.size());
 			
 			list.add(dto);
 		}
