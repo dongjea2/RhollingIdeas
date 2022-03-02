@@ -1,5 +1,6 @@
 package com.team.project.repository;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -47,7 +48,8 @@ public class QueryRepository {
 					.where( eqCategory(rds.getCategory())
 							,onGoing(rds.getOngoing())
 							,editorPick(rds.getEditorPick())
-							,achiveRate(rds.getAchiveRate()))
+							,achiveRate(rds.getAchiveRate())
+							,project.projectChange.projectStatus.contains("승인"))
 					.orderBy(sort(rds.getSort()))
 					.limit(rds.getLimit())
 					.fetch();
@@ -59,7 +61,8 @@ public class QueryRepository {
 					.select(project)
 					.from(project)
 					.where( eqCategory(rds.getCategory())
-							,project.longTitle.contains(rds.getSearchWords()))
+							,project.longTitle.contains(rds.getSearchWords()),
+							project.projectChange.projectStatus.contains("승인"))
 					.orderBy(sort(rds.getSort()))
 					.limit(rds.getLimit())
 					.fetch();

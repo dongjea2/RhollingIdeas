@@ -100,11 +100,15 @@ public class Project {
 		return false;
 	}
 
-	public boolean isProjectFundingEnded() {
+	public boolean isProjectFundingPossible() {
+		//1.endDate < ToDay
 		if (endDate.before(/*오늘*/new Date())) {
-			return true;
+			//2.status="승인"
+			if(projectChange.getProjectStatus().equals("승인")) {
+				return true;
+			}
 		}
-		return false;
+			return false;
 	}
 
 	public int getProjectNo() {

@@ -43,9 +43,9 @@ public class OrderService {
 		order.setCard(c);
 		
 
-		//2.프로젝트가 아직 진행 중인지
+		//2.프로젝트가 펀딩이 가능한지 
 		Project p = projectRepository.findByProjectNo(order.getProject().getProjectNo());
-		if(p.isProjectFundingEnded()) {
+		if(p.isProjectFundingPossible()) {
 			throw new FindException();
 		}
 		
