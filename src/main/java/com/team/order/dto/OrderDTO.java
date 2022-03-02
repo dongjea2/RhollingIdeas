@@ -1,7 +1,8 @@
-package com.team.order.entity;
+package com.team.order.dto;
 
 import java.util.Date;
 
+import com.team.order.entity.Order;
 import com.team.project.entity.Reward;
 import com.team.user.entity.Address;
 import com.team.user.entity.Card;
@@ -28,15 +29,11 @@ public class OrderDTO {
 		this.orderDate =order.getOrderDate();
 		this.totalPrice =order.getTotalPrice();
 		this.orderResult =order.getOrderResult();
-		this.reward =order.getReward();
+		this.reward =order.getReward();	
 		
-		
-		//변역
-		address.entityToDTO(order.getAddress());
+		this.address.entityToDTO(order.getAddress());
 		this.card.entityToDTO(order.getCard());
 	}
-
-
 
 	public int getOrderNo() {
 		return orderNo;
@@ -67,8 +64,6 @@ public class OrderDTO {
 	}
 	
 	
-	
-	
     public static class AddressDTO{
     	int addressNo;
     	String receiverName;
@@ -77,7 +72,6 @@ public class OrderDTO {
 		String receiverAddressDetailed;
 		String receiverPhone;
 		String defaultAddress;
-		
 		
 		public void entityToDTO(Address a) {
 
@@ -93,33 +87,24 @@ public class OrderDTO {
 		public int getAddressNo() {
 			return addressNo;
 		}
-
 		public String getReceiverName() {
 			return receiverName;
 		}
-
 		public int getReceiverZipcode() {
 			return receiverZipcode;
 		}
-
 		public String getReceiverAddress() {
 			return receiverAddress;
 		}
-
 		public String getReceiverAddressDetailed() {
 			return receiverAddressDetailed;
 		}
-
 		public String getReceiverPhone() {
 			return receiverPhone;
 		}
-
 		public String getDefaultAddress() {
 			return defaultAddress;
 		}
-		
-		
-		
     }
 	
 	
@@ -130,9 +115,7 @@ public class OrderDTO {
         String cardPwd;
         String cardOwnerBirth;
         String defaultCard;
-			
 
-			
 		public void entityToDTO(Card card) {
 			this.cardNo = card.getCardNo();
 			this.cardNum = card.getCardNum();
@@ -142,45 +125,24 @@ public class OrderDTO {
 			this.defaultCard = card.getDefaultCard();
 		}
 
-
-
 		public int getCardNo() {
 			return cardNo;
 		}
-
-
-
 		public String getCardNum() {
 			return cardNum;
 		}
-
-
-
 		public Date getCardValidDate() {
 			return cardValidDate;
 		}
-
-
-
 		public String getCardPwd() {
 			return cardPwd;
 		}
-
-
-
 		public String getCardOwnerBirth() {
 			return cardOwnerBirth;
 		}
-
-
-
 		public String getDefaultCard() {
 			return defaultCard;
 		}
-		
-		
-        
-        
         
     }
 }

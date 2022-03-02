@@ -14,6 +14,7 @@ import com.team.interest.dto.InterestDTO;
 import com.team.interest.entity.Interest;
 import com.team.interest.repository.InterestRepository;
 import com.team.project.entity.Project;
+import com.team.project.entity.ProjectChange;
 import com.team.project.repository.ProjectRepository;
 import com.team.user.entity.Customer;
 
@@ -91,20 +92,36 @@ public class InterestService {
 			interest.setInterestAlarm("A");
 		}
 
-		//프론트 로그인 유저와 백엔드 로그인 유저 검증
-		if( sessionCustomer.getUserNo() == interest.getLikeUser().getUserNo()) {
-			repository.save(interest);
-			return true;
+		//2.프론트 로그인 유저와 백엔드 로그인 유저 검증
+		if(!(sessionCustomer.getUserNo() == interest.getLikeUser().getUserNo())) {
+			return false;
 		}
-		return false;
+
+		Project realProject = projectRepository.findByProjectNo(interest.getLikeProject().getProjectNo());
+		ProjectChange pc = realProject.getProjectChange();
+
+		//3.LikeCnt +1
+		pc.setProjectLikeCnt(1+pc.getProjectLikeCnt());
+
+		interest.setLikeProject(realProject);
+		repository.save(interest);
+		return true;
 	}
 	
 	public boolean deleteInterest(Interest interest, Customer sessionCustomer) {
-		//프론트 로그인 유저와 백엔드 로그인 유저 검증
-		if( sessionCustomer.getUserNo() == interest.getLikeUser().getUserNo()) {
-			repository.delete(interest);
-			return true;
+		//1.프론트 로그인 유저와 백엔드 로그인 유저 검증
+		if(!(sessionCustomer.getUserNo() == interest.getLikeUser().getUserNo())) {
+			return false;
 		}
-		return false;
+
+		Project realProject = projectRepository.findByProjectNo(interest.getLikeProject().getProjectNo());
+		ProjectChange pc = realProject.getProjectChange();
+
+		//2.LikeCnt -1
+		pc.setProjectLikeCnt(pc.getProjectLikeCnt()-1);
+
+		interest.setLikeProject(realProject);
+		repository.delete(interest);
+		return true;
 	}
 }

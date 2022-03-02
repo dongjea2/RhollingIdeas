@@ -94,10 +94,21 @@ public class Project {
 
 	
 	public boolean isProjectFundingStarted() {
-		if (startDate.before(new Date())) {
+		if (startDate.before(/*오늘*/new Date())) {
 			return true;
 		}
 		return false;
+	}
+
+	public boolean isProjectFundingPossible() {
+		//1.endDate < ToDay
+		if (endDate.before(/*오늘*/new Date())) {
+			//2.status="승인"
+			if(projectChange.getProjectStatus().equals("승인")) {
+				return true;
+			}
+		}
+			return false;
 	}
 
 	public int getProjectNo() {
