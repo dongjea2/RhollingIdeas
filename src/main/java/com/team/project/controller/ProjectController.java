@@ -66,8 +66,10 @@ public class ProjectController {
 		Map<String, Object> returnMap = new HashMap<>();
 		RequestDataSelector rds = new RequestDataSelector();
 		rds.setLimit(8);
+		rds.setSort("newRelease");
 		returnMap.put("attention", service.findByRDS(rds, (Customer)s.getAttribute("loginInfo")));
 		rds.setLimit(3);
+		rds.setSort("endCome");
 		returnMap.put("advertise", service.findByRDS(rds, (Customer)s.getAttribute("loginInfo")));
 
 		return returnMap;

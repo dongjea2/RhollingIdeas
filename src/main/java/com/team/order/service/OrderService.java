@@ -11,6 +11,9 @@ import com.team.exception.FindException;
 import com.team.order.entity.Order;
 import com.team.order.entity.OrderDTO;
 import com.team.order.repository.OrderRepository;
+import com.team.project.entity.Project;
+import com.team.project.entity.ProjectChange;
+import com.team.project.repository.ProjectRepository;
 import com.team.user.entity.Card;
 import com.team.user.entity.Customer;
 import com.team.user.repository.AddressRepository;
@@ -24,6 +27,8 @@ public class OrderService {
 	private PaymentRepository paymentRepository; 
 	@Autowired
 	private AddressRepository addressRepository;
+	@Autowired
+	private ProjectRepository projectRepository;
 	/**
 	 * 주문정보를 추가한다
 	 * @param order 주문객체
@@ -36,6 +41,22 @@ public class OrderService {
 			throw new FindException();
 		}
 		order.setCard(c);
+		
+
+		//2.프로젝트가 아직 진행 중인지
+		Project p = projectRepository.findByProjectNo(order.getProject().getProjectNo());
+		if(p.isProjectFundingEnded()) {
+			throw new FindException();
+		}
+		
+		
+		//3. 프로젝트에 모금액 추가
+		order.setProject(p);
+		
+		ProjectChange pc = p.getProjectChange();
+		pc.setSumPrice(pc.getSumPrice()+order.getTotalPrice());
+		pc.setSupportCnt(pc.getSupportCnt()+1);
+		
 		
 		repository.save(order);
 	}

@@ -94,7 +94,14 @@ public class Project {
 
 	
 	public boolean isProjectFundingStarted() {
-		if (startDate.before(new Date())) {
+		if (startDate.before(/*오늘*/new Date())) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean isProjectFundingEnded() {
+		if (endDate.before(/*오늘*/new Date())) {
 			return true;
 		}
 		return false;
