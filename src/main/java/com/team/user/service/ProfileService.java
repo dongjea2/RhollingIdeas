@@ -63,4 +63,24 @@ public class ProfileService {
 		
 		return dto;
 	}
+
+	public ProfileIntroDTO findByUserUrl(String userUrl) {
+		Customer c = customerRepository.findByUserUrl(userUrl);
+		ProfileIntroDTO dto = new ProfileIntroDTO();
+		dto.entityToDTO(c);
+		
+		List<Project> pList = projectRepository.findByMaker(c);
+		List<Follow> followerList = followRepository.findByFollow(c);
+		List<Follow> followingList = followRepository.findByUserNo(c);
+		List<Order> orderList = orderRepository.findByOrderUser(c);
+		
+		dto.setCreatedProjectCnt(pList.size());
+		dto.setFollowerCnt(followerList.size());
+		dto.setFollowingCnt(followingList.size());
+		dto.setOrderProjectCnt(orderList.size());
+		
+		dto.setFollowCheck(false);
+		
+		return dto;
+	}
 }

@@ -20,9 +20,13 @@ public class ProfileController {
 	@GetMapping("/profile/{userUrl}")
 	public ProfileIntroDTO profile(@PathVariable String userUrl, HttpSession session) {
 		Customer c = (Customer)session.getAttribute("loginInfo");
-		
-		ProfileIntroDTO dto = service.findByUserUrl(userUrl, c);
-		return dto;
+		if(c != null) {
+			ProfileIntroDTO dto = service.findByUserUrl(userUrl, c);
+			return dto;
+		}else {
+			ProfileIntroDTO dto = service.findByUserUrl(userUrl);
+			return dto;
+		}
 	}
 
 }

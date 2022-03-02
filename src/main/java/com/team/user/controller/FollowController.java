@@ -49,7 +49,7 @@ public class FollowController {
 	 * @param f
 	 */
 	@PostMapping("/editfollow")
-	public void editfollow(@RequestBody Follow f, HttpSession session) {
+	public Object editfollow(@RequestBody Follow f, HttpSession session) {
 		Customer c = (Customer) session.getAttribute("loginInfo");
 		if(c != null) {
 			if(service.checkFollow(f) == true) {
@@ -57,6 +57,8 @@ public class FollowController {
 			}else {
 				service.saveFollow(f);
 			}
+			return 1;
 		}
+		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }
