@@ -13,4 +13,5 @@ public interface PaymentRepository extends CrudRepository<Card, Integer> {
 
 	public List<Card> findByUser(Customer c);
 	public Card findByCardNum(String cardNum);
+	public Card findByCardNo(int cardNo);
 }

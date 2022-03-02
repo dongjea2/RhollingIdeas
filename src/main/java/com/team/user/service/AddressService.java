@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.team.user.entity.Address;
+import com.team.user.entity.Card;
 import com.team.user.entity.Customer;
 import com.team.user.repository.AddressRepository;
 
@@ -34,5 +35,11 @@ public class AddressService {
 	
 	public void deleteAddress(Address address) {
 		addrRepo.deleteById(address.getAddressNo());
+	}
+	
+	public void modifyDefault(Address address) {
+		Address addr = addrRepo.findByAddressNo(address.getAddressNo());
+		addr.setDefaultAddress("1");
+		addrRepo.save(addr);
 	}
 }

@@ -36,5 +36,11 @@ public class PaymentService {
 	public void deleteCard(Card card) {
 		paymentRepo.deleteById(card.getCardNo());
 	}
+	
+	public void modifyDefault(Card card) {
+		Card c = paymentRepo.findByCardNo(card.getCardNo());
+		c.setDefaultCard("1");
+		paymentRepo.save(c);
+	}
 
 }

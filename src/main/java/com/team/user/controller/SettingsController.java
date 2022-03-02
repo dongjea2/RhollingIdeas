@@ -162,5 +162,24 @@ public class SettingsController {
 	public void deleteAddress(@RequestBody Address address) {
 		addrService.deleteAddress(address);
 	}
-
+	
+	@PutMapping("/paymentdefault")
+	public void modifyDefault(@RequestBody Card card) {
+		List<Card> list = paymentService.findByUserNo(card.getUser().getUserNo());
+		for(int i=0; i<list.size(); i++) {
+			list.get(i).setDefaultCard("0");
+			paymentService.modifyCard(list.get(i));
+		}
+		paymentService.modifyDefault(card);
+	}
+	
+	@PutMapping("/addressdefault")
+	public void modifyDefault(@RequestBody Address address) {
+		List<Address> list = addrService.findByUserNo(address.getUser().getUserNo());
+		for(int i=0; i<list.size(); i++) {
+			list.get(i).setDefaultAddress("0");
+			addrService.modifyAddress(list.get(i));
+		}
+		addrService.modifyDefault(address);
+	}
 }

@@ -12,4 +12,5 @@ import com.team.user.entity.Customer;
 public interface AddressRepository extends CrudRepository<Address, Integer> {
 	
 	public List<Address> findByUser(Customer c);
+	public Address findByAddressNo(int addressNo);
 }
