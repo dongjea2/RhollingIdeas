@@ -33,7 +33,7 @@ public class OrderController {
 		Customer c = (Customer)session.getAttribute("loginInfo");
 		
 		if(c != null) {
-			List<OrderDTO> list = service.myOrderProjects(c);	
+			List<OrderDTO> list = service.findOrderProjects(c);	
 			return list;
 		}
 		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
