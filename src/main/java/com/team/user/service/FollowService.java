@@ -32,7 +32,7 @@ public class FollowService {
 	 * @param c
 	 * @return
 	 */
-	public Object following(Customer c) {
+	public Object findFollowing(Customer c) {
 		Map<String, Object> returnMap = new HashMap<>();
 		List<FollowDTO> list = new ArrayList<>();
 		List<Follow> fList = repository.findByUserNo(c);
@@ -67,7 +67,7 @@ public class FollowService {
 	 * @param c
 	 * @return
 	 */
-	public Object followers(Customer c) {
+	public Object findFollowers(Customer c) {
 		Map<String, Object> returnMap = new HashMap<>();
 		List<FollowDTO> list = new ArrayList<>();
 		List<Follow> fList = repository.findByFollow(c);

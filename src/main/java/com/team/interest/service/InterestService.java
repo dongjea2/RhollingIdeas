@@ -32,7 +32,7 @@ public class InterestService {
 	 * @param c 로그인한 유저 객체
 	 * @return 유저의 I 프로젝트 리스트
 	 */
-	public Object myInterestProjects(Customer c) {
+	public Object findInterestProjects(Customer c) {
 		Map<String, Object> returnMap = new HashMap<>();
 		List<InterestDTO> list = new ArrayList<>();
 		List<Interest> iList = repository.findByLikeUserAndInterestAlarm(c, "I");
@@ -55,7 +55,7 @@ public class InterestService {
 	 * @param c 로그인한 유저 객체
 	 * @return 유저의 A 프로젝트 리스트
 	 */
-	public Object myAlarmProjects(Customer c) {
+	public Object findAlarmProjects(Customer c) {
 		Map<String, Object> returnMap = new HashMap<>();
 		List<InterestDTO> list = new ArrayList<>();
 		List<Interest> aList = repository.findByLikeUserAndInterestAlarm(c, "A");

@@ -32,7 +32,7 @@ public class InterestController {
 		Customer c = (Customer)session.getAttribute("loginInfo");
 		
 		if(c != null) {
-			return service.myInterestProjects(c);
+			return service.findInterestProjects(c);
 		}
 		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
@@ -42,7 +42,7 @@ public class InterestController {
 		Customer c = (Customer)session.getAttribute("loginInfo");
 		
 		if(c != null) {
-			return service.myAlarmProjects(c);
+			return service.findAlarmProjects(c);
 		}
 		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}

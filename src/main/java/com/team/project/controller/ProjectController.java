@@ -96,7 +96,7 @@ public class ProjectController {
 //		c.setUserNo(1);
 		
 		if(c != null) {
-			List<CreatedProjectDTO> list = service.createdProject(c);
+			List<CreatedProjectDTO> list = service.createdProjects(c);
 			return list;
 		}
 		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

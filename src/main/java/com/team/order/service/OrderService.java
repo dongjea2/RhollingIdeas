@@ -78,7 +78,7 @@ public class OrderService {
 	 * @param userNo 유저번호
 	 * @return 주문한 목록들
 	 */
-	public List<OrderDTO> myOrderProjects(Customer c){
+	public List<OrderDTO> findOrderProjects(Customer c){
 		List<OrderDTO> list = new ArrayList<>();
 		List<Order> orders = repository.findByOrderUser(c);
 		for(Order o : orders) {

@@ -28,7 +28,7 @@ public class FollowController {
 		Customer c = (Customer) session.getAttribute("loginInfo");
 		
 		if(c != null) {
-			return service.following(c);
+			return service.findFollowing(c);
 
 		}
 		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -39,7 +39,7 @@ public class FollowController {
 		Customer c = (Customer) session.getAttribute("loginInfo");
 		
 		if(c != null) {
-			return service.followers(c);
+			return service.findFollowers(c);
 		}
 		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
