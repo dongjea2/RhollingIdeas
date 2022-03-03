@@ -100,7 +100,7 @@ public class ProjectService {
 	 * @param c 프로젝트 만든 유저 객체
 	 * @return 프로젝트리스트
 	 */
-	public List<CreatedProjectDTO> createdProject(Customer c) {
+	public List<CreatedProjectDTO> createdProjects(Customer c) {
 		List<CreatedProjectDTO> list = new ArrayList<>();
 		List<Project> pList = projectRepository.findByMaker(c);
 		
