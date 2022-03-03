@@ -78,12 +78,10 @@ public class ProjectController {
 	}
 
 	@PostMapping("/projectwrite")
-//    public Object projectwrite(@RequestBody Project p) {
-	public Object projectwrite(@RequestParam(value = "data") Project p, @RequestParam(value = "file") MultipartFile file) {
-		
+    public Object projectwrite(@RequestBody Project p) {
+//	public Object projectwrite(@RequestParam(value = "data") Project p, @RequestParam(value = "file") MultipartFile file) {		
 		System.out.println("프로젝트의 카테고리부분:" + p.getCategory());
 		System.out.println("프로젝트의 타이틀:" + p.getLongTitle());
-		p.setProjectImage(file.getName());
 		
 		return service.save(p);
 	}

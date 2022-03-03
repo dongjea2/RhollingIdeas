@@ -11,4 +11,6 @@ public interface RewardRepository extends CrudRepository<Reward, Integer> {
 	Reward findByRewardNo(int rewardNo);
 	
 	List<Reward> findByProject(Project p);
+
+	void save(List<Reward> reward);
 }

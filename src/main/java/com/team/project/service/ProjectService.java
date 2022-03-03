@@ -123,7 +123,8 @@ public class ProjectService {
 	}
 
 	public Object save(Project p) {
-		// TODO Auto-generated method stub
+		
+		rewardRepository.save(p.getReward());
 		return projectRepository.save(p);
 	}
 }
