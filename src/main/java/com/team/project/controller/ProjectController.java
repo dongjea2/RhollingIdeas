@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import com.team.project.repository.QueryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -68,10 +69,10 @@ public class ProjectController {
 		Map<String, Object> returnMap = new HashMap<>();
 		RequestDataSelector rds = new RequestDataSelector();
 		rds.setLimit(8);
-		rds.setSort("newRelease");
+		rds.setSort(QueryRepository.ProjectSort.startDate);
 		returnMap.put("attention", service.findByRDS(rds, (Customer)s.getAttribute("loginInfo")));
 		rds.setLimit(3);
-		rds.setSort("endCome");
+		rds.setSort(QueryRepository.ProjectSort.endDate);
 		returnMap.put("advertise", service.findByRDS(rds, (Customer)s.getAttribute("loginInfo")));
 
 		return returnMap;

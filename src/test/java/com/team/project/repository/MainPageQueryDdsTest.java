@@ -24,7 +24,9 @@ public class MainPageQueryDdsTest {
 	QueryRepository qr;
 
 	RequestDataSelector rds;
-	
+
+
+	//TODO:: 이넘 사용한 거 적용시키기
 	//1.신규 프로젝트
 	@Test
 	public void newRelease() {
@@ -77,7 +79,7 @@ public class MainPageQueryDdsTest {
 	public void attention() {
 		rds = new RequestDataSelector();
 		rds.setOngoing("onGoing");
-		rds.setAchiveRate(3);
+		rds.setAchiveRate();
 		
 		getNames(qr.findByRequestData(rds));
 		

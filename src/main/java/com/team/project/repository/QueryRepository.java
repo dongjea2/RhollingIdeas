@@ -1,6 +1,5 @@
 package com.team.project.repository;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -57,9 +56,9 @@ public class QueryRepository {
 					.select(project)
 					.from(project)
 					.where( eqCategory(rds.getCategory())
-							,onGoing(rds.getOngoing())
-							,editorPick(rds.getEditorPick())
-							,achiveRate(rds.getAchiveRate())
+							, progressState(rds.getProgressState())
+							,editorPick(rds.isEditorPick())
+							, achieveRate(rds.getAchiveRate())
 							,project.projectChange.projectStatus.contains("승인"))
 					.orderBy(sort(rds.getSort()))
 					.limit(rds.getLimit())
@@ -81,7 +80,7 @@ public class QueryRepository {
 			
 		
 	}
-	
+
 
 
 	//BooleanExpressions
@@ -96,38 +95,42 @@ public class QueryRepository {
 	}
 
 	//2.
-	private BooleanExpression onGoing (String onGoing) {
-		if(onGoing == null) {
+	enum ProjectProgressState {
+		none, onGoing,confirm, preLaunch
+	}
+
+	private BooleanExpression progressState(ProjectProgressState state) {
+		if(state == state.none) {
 			log.info("[RDS]Not Select editorPick");
 			return null;
 		}
 
-		if(onGoing .equals("onGoing")) {
+		if( state== state.onGoing) {
 			log.info("[RDS]onGoing");
 			return projectChange.projectStatus.eq("승인")
 					.and(project.startDate.before(new Date())
 					.and(project.endDate.after(new Date())));
 		}
 		
-		if(onGoing .equals("confirm")) {
+		if(state == state.confirm) {
 			log.info("[RDS]confirm");
 			return projectChange.projectStatus.eq("승인")
 					.and(project.endDate.before(new Date()))
 					.and(projectChange.sumPrice.gt(project.targetPrice));
 		}
 		
-		if(onGoing.equals("preLaunch")){
+		if(state == state.preLaunch){
 			log.info("[RDS]preLaunch");
 			return projectChange.projectStatus.eq("승인")
 					.and(project.startDate.after(new Date()));
 		}
-		log.info("[RDS]Not Select OnGoing");
+		log.warn("[RDS]ProgeressState [erro]");
 		return null;
 	}
-	
+
 	//3.
-	private BooleanExpression editorPick(int editorPick) {
-		if(editorPick == 1) {
+	private BooleanExpression editorPick(boolean isEditorPicked) {
+		if(isEditorPicked) {
 			log.info("[RDS]editorPick");
 			return project.editorPick.eq("1");
 
@@ -135,68 +138,80 @@ public class QueryRepository {
 		log.info("[RDS]Not Select editorPick");
 		return null;
 	}
+
+	enum ArchiveRate{
+
+	}
 	
 	//4.
-	private BooleanExpression achiveRate(int achiveRate) {
+	enum ProjectAchiveRate {
+		rateLessThan75
+		,rateBetween75And100
+		,rateMoreThan100
+	}
+	private BooleanExpression achieveRate(ProjectAchiveRate achiveRate) {
 		final int RATE_LESS_THAN_75 =1;
 		final int RATE_BETWEEN_75_AND_100=2;
 		final int RATE_MORE_THAN_100 =3;
 
-		if( achiveRate == RATE_LESS_THAN_75) {
+		if( achiveRate == achiveRate.rateLessThan75) {
 			log.info("[RDS]RATE_LESS_THAN_75");
 			return projectChange.sumPrice.divide(project.targetPrice).lt(0.75);
 		}
-		if( achiveRate == RATE_BETWEEN_75_AND_100) {
+		if( achiveRate == achiveRate.rateBetween75And100) {
 			log.info("[RDS]RATE_BETWEEN_75_AND_100");
 			return projectChange.sumPrice.divide(project.targetPrice).between(0.75, 1.00);
 		}
-		if( achiveRate == RATE_MORE_THAN_100) {
+		if( achiveRate == achiveRate.rateMoreThan100) {
 			log.info("[RDS]RATE_MORE_THAN_100");
 			return projectChange.sumPrice.divide(project.targetPrice).gt(1.00);
 			
 		}
 		
-		log.info("[RDS]Not Select AchiveRate");
+		log.warn("[RDS]Not Select AchiveRate");
 		return null;
 	}
 	
 	
-	//orderBy
-	/**
-	 * 
-	 * @param sort("likeCnt")
-	 * @return
-	 */
-	private OrderSpecifier<?> sort(String sort) {
-		if(sort ==null) {
+	//4.orderBy
+	enum ProjectSort {
+		none,
+		likeCount,
+		supportCount,
+		sumPrice,
+		startDate,
+		endDate
+	}
+	private OrderSpecifier<?> sort(ProjectSort sort) {
+		if(sort ==sort.none) {
 			log.info("[RDS]Not Select Sort");
 			return project.projectNo.asc();
 		}
 	
-		if(sort.equals("likeCnt")) {
+		if(sort== sort.likeCount) {
 			log.info("[RDS]likeCnt");
 			return projectChange.projectLikeCnt.desc();
 		}
 		
-		if(sort.equals("supportCnt")){
+		if(sort == sort.supportCount){
 			log.info("[RDS]supportCnt");
 			return projectChange.supportCnt.desc();
 			
 		}
 		
-		if(sort.equals("sumPrice")){
+		if(sort == sort.sumPrice){
 			log.info("[RDS]sumPrice");
 			return projectChange.sumPrice.desc();
 			
 		}
 		
-		if(sort.equals("newRelease")) {
+		if(sort == sort.startDate) {
 			log.info("[RDS]newRelease");
 			return project.startDate.desc();
 			
 		}
 			
-		if(sort.equals("endCome")) {
+		if(sort == sort.endDate) {
 			log.info("[RDS]endCome");
 			return project.endDate.desc();
 			
